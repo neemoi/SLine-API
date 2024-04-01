@@ -1,6 +1,8 @@
 using Application.MappingProfile.User;
 using Application.Services.Implementations.User;
+using Application.Services.Interfaces.IRepository;
 using Application.Services.Interfaces.IServices;
+using Application.UnitOfWork;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -8,7 +10,8 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Persistance;
 using Persistance.Context;
-using Swashbuckle.AspNetCore.SwaggerGen;
+using Persistance.Repository;
+using Persistance.Repository.User;
 using System.Text;
 
 internal class Program
@@ -20,6 +23,18 @@ internal class Program
         var jwtSettings = builder.Configuration.GetSection("JwtSettings");
         var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
         builder.Services.AddDbContext<StoreLineContext>(options => options.UseNpgsql(connectionString));
+
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy("AllowAllOrigins",
+                builder =>
+                {
+                    builder.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
+                });
+        });
+
 
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
@@ -65,7 +80,7 @@ internal class Program
                    };
                });
 
-        builder.Services.AddAutoMapper(typeof(MappingAuthorization));
+        builder.Services.AddAutoMapper(typeof(MappingAuthorization), typeof(MappingStore));
 
         // Registering Scoped Services
         builder.Services.AddScoped(provider =>
@@ -78,7 +93,12 @@ internal class Program
         });
         builder.Services.AddScoped<UserManager<Users>>();
         builder.Services.AddScoped<UserManager<Users>, UserManager<Users>>();
+        builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
         builder.Services.AddScoped<IAccountService, AccountService>();
+        builder.Services.AddScoped<IStoreService, StoreService>();
+
+        //Registering Scoped Repositories
+        builder.Services.AddScoped<IStoreRepository, StoresRepository>();
 
         // Identity Configuration
         builder.Services.AddIdentity<Users, IdentityRole>()
@@ -98,6 +118,8 @@ internal class Program
         app.UseAuthentication();
         app.UseAuthorization();
 
+        app.UseCors("AllowAllOrigins");
+        
         app.MapControllers();
 
         app.Run();

@@ -22,8 +22,7 @@ namespace StoreLineAPI.Controllers
         {
             try
             {
-                var response = await _accountService.LoginAsync(model);
-                return Ok(response);
+                return Ok(await _accountService.LoginAsync(model));
             }
             catch (Exception ex)
             {
@@ -37,8 +36,7 @@ namespace StoreLineAPI.Controllers
         {
             try
             {
-                var response = await _accountService.RegisterAsync(model);
-                return Ok(response);
+                return Ok(await _accountService.RegisterAsync(model));
             }
             catch (Exception ex)
             {
@@ -52,8 +50,7 @@ namespace StoreLineAPI.Controllers
         {
             try
             {
-                var response = await _accountService.LogoutAsync(HttpContext);
-                return Ok(response);
+                return Ok(await _accountService.LogoutAsync(HttpContext));
             }
             catch (Exception ex)
             {
