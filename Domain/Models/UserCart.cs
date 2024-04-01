@@ -18,5 +18,5 @@ public partial class UserCart
 
     public virtual Store? Store { get; set; }
 
-    public virtual User? User { get; set; }
+    public virtual Users? User { get; set; }
 }
