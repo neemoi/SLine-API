@@ -6,7 +6,7 @@ namespace StoreLineAPI.Controllers
 {
     [ApiController]
     [Route("api/Store")]
-    [Authorize]
+    //[Authorize]
     public class InformationAboutStoresController : ControllerBase
     {
         private readonly IStoreService _storeService;
@@ -25,7 +25,8 @@ namespace StoreLineAPI.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { message = ex.Message });
+                Console.WriteLine($"{ex.Message}");
+                throw;
             }
         }
 
@@ -38,7 +39,8 @@ namespace StoreLineAPI.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { message = ex.Message });
+                Console.WriteLine($"{ex.Message}");
+                throw;
             }
         }
     }

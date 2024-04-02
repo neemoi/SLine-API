@@ -17,7 +17,16 @@ namespace Persistance.Repository.User
         {
             try
             {
-                return await _storeLineContext.ChainOfStores.ToListAsync();
+                var chains = await _storeLineContext.ChainOfStores.ToListAsync();
+
+                if (chains != null)
+                {
+                    return chains;
+                }
+                else
+                {
+                    throw new Exception($"Chains not found");
+                }
             }
             catch (Exception ex)
             {
@@ -30,9 +39,18 @@ namespace Persistance.Repository.User
         {
             try
             {
-                return await _storeLineContext.Stores
+                var stores = await _storeLineContext.Stores
                     .Include(store => store.Chain)
                     .ToListAsync();
+
+                if (stores != null)
+                {
+                    return stores;
+                }
+                else
+                {
+                    throw new Exception($"Stores not found");
+                }
             }
             catch (Exception ex)
             {

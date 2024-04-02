@@ -20,7 +20,8 @@ namespace Application.Services.Implementations.User
         {
             try
             {
-                var result = await _unitOfWork.StoreRepository.GetAllChainsAsync();
+                var result = await _unitOfWork.StoreRepository.GetAllChainsAsync(); 
+
                 return _mapper.Map<List<ChainOfStoreResponseDto>>(result);
             }
             catch (Exception ex)
@@ -35,6 +36,7 @@ namespace Application.Services.Implementations.User
             try
             {
                 var result = await _unitOfWork.StoreRepository.GetAllStoresAsync();
+
                 return _mapper.Map<List<StoreResponseDto>>(result);
             }
             catch (Exception ex)
