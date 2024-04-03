@@ -85,5 +85,19 @@ namespace StoreLineAPI.Controllers
                 throw;
             }
         }
+
+        [HttpGet("/Product/{productId}")]
+        public async Task<IActionResult> GetProductsByIdAsync(int productId)
+        {
+            try
+            {
+                return Ok(await _catalogService.GetProductsByIdAsync(productId));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"{ex.Message}");
+                throw;
+            }
+        }
     }
 }

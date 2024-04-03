@@ -59,6 +59,28 @@ namespace Persistance.Repository.User
             };
         }
 
+        public async Task<Product> GetProductsByIdAsync(int productId)
+        {
+            try
+            {
+                var product = await _storeLineContext.Products.FirstOrDefaultAsync(p => p.ProductId == productId);
+                  
+                if (product != null)
+                {
+                    return product;
+                }
+                else
+                {
+                    throw new Exception($"Product Id ({productId}) not found");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"{ex.Message}");
+                throw;
+            }
+        }
+
         public async Task<List<Product>> GetProductsByNameAsync(string productName)
         {
             try

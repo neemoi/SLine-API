@@ -46,6 +46,21 @@ namespace Application.Services.Implementations.User
             }
         }
 
+        public async Task<ProductResponseDto> GetProductsByIdAsync(int productId)
+        {
+            try
+            {
+                var result = await _unitOfWork.CatalogRepository.GetProductsByIdAsync(productId);
+
+                return _mapper.Map<ProductResponseDto>(result);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"{ex.Message}");
+                throw;
+            }
+        }
+
         public async Task<List<ProductResponseDto>> GetProductsByNameAsync(string productName)
         {
             try
