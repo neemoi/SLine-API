@@ -8,6 +8,7 @@ namespace Application.UnitOfWork
 
         public ICatalogRepository CatalogRepository { get; }
 
+        public IBasketRepository BasketRepository { get; }
         Task SaveChangesAsync();
     }
 }

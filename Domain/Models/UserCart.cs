@@ -12,6 +12,8 @@ public partial class UserCart
 
     public int? StoreId { get; set; }
 
+    public decimal? Price { get; set; }
+
     public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
 
     public virtual Product? Product { get; set; }

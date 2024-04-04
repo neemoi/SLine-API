@@ -10,13 +10,17 @@ namespace Persistance.Repository
 
         public ICatalogRepository CatalogRepository { get; }
 
+        public IBasketRepository BasketRepository { get; }
+
         private readonly StoreLineContext _storeLineContext;
 
-        public UnitOfWork(StoreLineContext storeLineContext, IStoreRepository storeRepository, ICatalogRepository catalogRepository)
+        public UnitOfWork(StoreLineContext storeLineContext, IStoreRepository storeRepository, 
+            ICatalogRepository catalogRepository, IBasketRepository basketRepository)
         {
             _storeLineContext = storeLineContext;
             StoreRepository = storeRepository;
             CatalogRepository = catalogRepository;
+            BasketRepository = basketRepository;
         }
 
         public async Task SaveChangesAsync()

@@ -80,7 +80,8 @@ internal class Program
                    };
                });
 
-        builder.Services.AddAutoMapper(typeof(MappingAuthorization), typeof(MappingStore), typeof(MappingCatalog));
+        builder.Services.AddAutoMapper(typeof(MappingAuthorization), typeof(MappingStore), typeof(MappingCatalog),
+            typeof(MappingCart));
 
         // Registering Scoped Services
         builder.Services.AddScoped(provider =>
@@ -97,10 +98,12 @@ internal class Program
         builder.Services.AddScoped<IAccountService, AccountService>();
         builder.Services.AddScoped<IStoreService, StoreService>();
         builder.Services.AddScoped<ICatalogService, CatalogService>();
+        builder.Services.AddScoped<IBasketService, BasketService>();
 
         //Registering Scoped Repositories
         builder.Services.AddScoped<IStoreRepository, StoresRepository>();
         builder.Services.AddScoped<ICatalogRepository, CatalogRepository>();
+        builder.Services.AddScoped<IBasketRepository, BasketReporitory>();
 
         // Identity Configuration
         builder.Services.AddIdentity<Users, IdentityRole>()
