@@ -84,17 +84,18 @@ public partial class StoreLineContext : IdentityDbContext<Users>
 
         modelBuilder.Entity<DeliveryOption>(entity =>
         {
-            entity.HasKey(e => e.DeliveryId).HasName("delivery_options_pkey");
+            entity.HasKey(e => e.Id).HasName("delivery_options_pkey");
 
-            entity.ToTable("delivery_options");
+            entity.ToTable("options");
 
             entity.HasIndex(e => e.StoreId, "IX_delivery_options_store_id");
 
-            entity.Property(e => e.DeliveryId).HasColumnName("delivery_id");
-            entity.Property(e => e.DeliveryPrice)
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Type).HasColumnName("type");
+            entity.Property(e => e.Price)
                 .HasPrecision(10, 2)
-                .HasColumnName("delivery_price");
-            entity.Property(e => e.DeliveryTime).HasColumnName("delivery_time");
+                .HasColumnName("price");
+            entity.Property(e => e.Time).HasColumnName("time");
             entity.Property(e => e.StoreId).HasColumnName("store_id");
 
             entity.HasOne(d => d.Store).WithMany(p => p.DeliveryOptions)
