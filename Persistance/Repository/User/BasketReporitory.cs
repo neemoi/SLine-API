@@ -58,7 +58,7 @@ namespace Persistance.Repository.User
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"{ex.Message}");
+                Console.WriteLine($"Error in Repository -> AddProductToCartAsync: {ex.Message}");
                 throw;
             }
         }
@@ -67,6 +67,9 @@ namespace Persistance.Repository.User
         {
             try
             {
+                var userExist = await _storeLineContext.Users.FirstOrDefaultAsync(i => i.Id == userId)
+                    ?? throw new Exception($"User by id ({userId}) not found");
+
                 var result = await _storeLineContext.UserCarts
                  .Where(c => c.UserId == userId)
                  .Include(p => p.Product)
@@ -83,7 +86,7 @@ namespace Persistance.Repository.User
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"{ex.Message}");
+                Console.WriteLine($"Error in Repository -> GetCartItemsAsync: {ex.Message}");
                 throw;
             };
         }
@@ -92,6 +95,9 @@ namespace Persistance.Repository.User
         {
             try
             {
+                var productExist = await _storeLineContext.Products.FirstOrDefaultAsync(p => p.ProductId == productId)
+                    ?? throw new Exception($"Product by id ({productId}) not found");
+
                 var result = await _storeLineContext.Warehouses
                  .Include(w => w.Store)
                      .ThenInclude(s => s.DeliveryOptions)
@@ -112,9 +118,82 @@ namespace Persistance.Repository.User
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error in GetProductsAvailableStores: {ex.Message}");
+                Console.WriteLine($"Error in Repository -> GetProductsAvailableStores: {ex.Message}");
                 throw;
             }
         }
+
+        public async Task<UserCart> RemoveProductByIdCartAsync(DeleteCartProductDto model)
+        {
+            try
+            {
+                var cartItem = await _storeLineContext.UserCarts
+                    .Include(p => p.Product)
+                    .FirstOrDefaultAsync(c => c.ProductId == model.ProductId && c.UserId == model.UserId);
+
+                if (cartItem != null)
+                {
+                    if (cartItem.Quantity >= model.Quantity)
+                    {
+                        cartItem.Quantity -= model.Quantity;
+
+                        if (cartItem.Quantity == 0)
+                        {
+                            _storeLineContext.UserCarts.Remove(cartItem);
+                        }
+
+                        await _storeLineContext.SaveChangesAsync();
+
+                        return cartItem;
+                    }
+                    else
+                    {
+                        throw new Exception("Requested quantity to remove exceeds the quantity in the cart.");
+                    }
+                }
+                else
+                {
+                    throw new Exception($"Product with ID {model.ProductId} not found in the user's cart.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in Repository -> RemoveProductByIdCartAsync: {ex.Message}");
+                throw;
+            }
+        }
+
+        public async Task<List<UserCart>> RemoveUserCartAsync(string userId)
+        {
+            try
+            {
+                var userExist = await _storeLineContext.Users.FirstOrDefaultAsync(i => i.Id == userId)
+                   ?? throw new Exception($"User by id ({userId}) not found");
+
+                var cartItems = await _storeLineContext.UserCarts
+                    .Include(p => p.Product)
+                    .Where(c => c.UserId == userId)
+                    .ToListAsync();
+
+                if (cartItems != null && cartItems.Any())
+                {
+                    _storeLineContext.UserCarts.RemoveRange(cartItems);
+
+                    await _storeLineContext.SaveChangesAsync();
+                    
+                    return cartItems;
+                }
+                else
+                {
+                    throw new Exception($"User cart not found for UserId: ({userId})");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in Repository -> RemoveUserCartAsync: {ex.Message}");
+                throw;
+            }
+        }
+
     }
 }

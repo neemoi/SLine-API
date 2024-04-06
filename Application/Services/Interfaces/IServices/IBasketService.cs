@@ -1,5 +1,6 @@
 ﻿using Application.DtoModels.Models.User;
 using Application.DtoModels.Response.User;
+using Persistance;
 
 namespace Application.Services.Interfaces.IServices
 {
@@ -11,8 +12,8 @@ namespace Application.Services.Interfaces.IServices
 
         Task<List<GetProductsStoresResponseDto>> GetProductsAvailableStores(int productId);
 
-        //Task<UserCartResponseDto> DeleteBacketProductsAsync(string userId);
+        Task<UserCartResponseDto> RemoveProductByIdCartAsync(DeleteCartProductDto model);
 
-        //Task<UserCartResponseDto> DeleteBasketProductByIdAsync(string userId, int productId);
+        Task<List<UserCartResponseDto>> RemoveUserCartAsync(string userId);
     }
 }

@@ -43,12 +43,40 @@ namespace StoreLineAPI.Controllers
             }
         }
 
-        [HttpGet("/AvailableStores")]
+        [HttpGet("/AvailableStores/{productId}")]
         public async Task<IActionResult> GetProductsAvailableStores(int productId)
         {
             try
             {
                 var result = await _basketService.GetProductsAvailableStores(productId);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
+        [HttpDelete("/RemoveProduct")]
+        public async Task<IActionResult> RemoveProductByIdCartAsync(DeleteCartProductDto model)
+        {
+            try
+            {
+                var result = await _basketService.RemoveProductByIdCartAsync(model);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
+        [HttpDelete("/RemoveCart/{userId}")]
+        public async Task<IActionResult> RemoveUserCartAsync(string userId)
+        {
+            try
+            {
+                var result = await _basketService.RemoveUserCartAsync(userId);
                 return Ok(result);
             }
             catch (Exception ex)

@@ -11,8 +11,8 @@ namespace Application.Services.Interfaces.IRepository
 
         Task<List<Warehouse>> GetProductsAvailableStores(int productId);
 
-        //Task<UserCart> DeleteBacketProductsAsync(string userId);
+        Task<UserCart> RemoveProductByIdCartAsync(DeleteCartProductDto model);
 
-        //Task<UserCart> DeleteBasketProductByIdAsync(string userId, int productId);
+        Task<List<UserCart>> RemoveUserCartAsync(string userId);
     }
 }

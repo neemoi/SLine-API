@@ -27,7 +27,7 @@ namespace Application.Services.Implementations.User
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"{ex.Message}");
+                Console.WriteLine($"Error in Service -> AddProductToCartAsync: {ex.Message}");
                 throw;
             }
         }
@@ -42,7 +42,7 @@ namespace Application.Services.Implementations.User
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"{ex.Message}");
+                Console.WriteLine($"Error in Service -> GetCartItemsAsync: {ex.Message}");
                 throw;
             }
         }
@@ -68,7 +68,37 @@ namespace Application.Services.Implementations.User
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"{ex.Message}");
+                Console.WriteLine($"Error in Service -> GetProductsAvailableStores: {ex.Message}");
+                throw;
+            }
+        }
+
+        public async Task<UserCartResponseDto> RemoveProductByIdCartAsync(DeleteCartProductDto model)
+        {
+            try
+            {
+                var updatedCartItem = await _unitOfWork.BasketRepository.RemoveProductByIdCartAsync(model);
+
+                return _mapper.Map<UserCartResponseDto>(updatedCartItem); ;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in Service -> RemoveProductByIdCartAsync: {ex.Message}");
+                throw;
+            }
+        }
+
+        public async Task<List<UserCartResponseDto>> RemoveUserCartAsync(string userId)
+        {
+            try
+            {
+                var updatedCartItem = await _unitOfWork.BasketRepository.RemoveUserCartAsync(userId);
+
+                return _mapper.Map<List<UserCartResponseDto>>(updatedCartItem); ;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in Service -> RemoveUserCartAsync: {ex.Message}");
                 throw;
             }
         }
