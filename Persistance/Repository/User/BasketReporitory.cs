@@ -87,5 +87,34 @@ namespace Persistance.Repository.User
                 throw;
             };
         }
+
+        public async Task<List<Warehouse>> GetProductsAvailableStores(int productId)
+        {
+            try
+            {
+                var result = await _storeLineContext.Warehouses
+                 .Include(w => w.Store)
+                     .ThenInclude(s => s.DeliveryOptions)
+                 .Include(p => p.Product)
+                    .ThenInclude(p => p.Warehouses)
+                 .Where(w => w.ProductId == productId)
+                 .ToListAsync();
+
+
+                if (result.Any())
+                {
+                    return result;
+                }
+                else
+                {
+                    throw new InvalidOperationException($"Warehouses not found for ProductId: {productId}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in GetProductsAvailableStores: {ex.Message}");
+                throw;
+            }
+        }
     }
 }

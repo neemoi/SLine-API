@@ -42,5 +42,19 @@ namespace StoreLineAPI.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+
+        [HttpGet("/AvailableStores")]
+        public async Task<IActionResult> GetProductsAvailableStores(int productId)
+        {
+            try
+            {
+                var result = await _basketService.GetProductsAvailableStores(productId);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
     }
 }

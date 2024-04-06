@@ -81,7 +81,7 @@ internal class Program
                });
 
         builder.Services.AddAutoMapper(typeof(MappingAuthorization), typeof(MappingStore), typeof(MappingCatalog),
-            typeof(MappingCart));
+            typeof(MappingBasket));
 
         // Registering Scoped Services
         builder.Services.AddScoped(provider =>

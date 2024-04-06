@@ -8,7 +8,9 @@ namespace Application.Services.Interfaces.IRepository
         Task<UserCart> AddProductToCartAsync(CartDto model);
 
         Task<List<UserCart>> GetCartItemsAsync(string userId);
-        
+
+        Task<List<Warehouse>> GetProductsAvailableStores(int productId);
+
         //Task<UserCart> DeleteBacketProductsAsync(string userId);
 
         //Task<UserCart> DeleteBasketProductByIdAsync(string userId, int productId);

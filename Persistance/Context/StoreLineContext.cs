@@ -84,18 +84,18 @@ public partial class StoreLineContext : IdentityDbContext<Users>
 
         modelBuilder.Entity<DeliveryOption>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("delivery_options_pkey");
+            entity.HasKey(e => e.DeliveryId).HasName("delivery_options_pkey");
 
             entity.ToTable("options");
 
             entity.HasIndex(e => e.StoreId, "IX_delivery_options_store_id");
 
-            entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.Type).HasColumnName("type");
-            entity.Property(e => e.Price)
+            entity.Property(e => e.DeliveryId).HasColumnName("delivery_id");
+            entity.Property(e => e.DeliveryType).HasColumnName("delivery_type");
+            entity.Property(e => e.DeliveryPrice)
                 .HasPrecision(10, 2)
-                .HasColumnName("price");
-            entity.Property(e => e.Time).HasColumnName("time");
+                .HasColumnName("delivery_price");
+            entity.Property(e => e.DeliveryTime).HasColumnName("delivery_time");
             entity.Property(e => e.StoreId).HasColumnName("store_id");
 
             entity.HasOne(d => d.Store).WithMany(p => p.DeliveryOptions)
@@ -275,6 +275,7 @@ public partial class StoreLineContext : IdentityDbContext<Users>
             entity.Property(e => e.Quantity).HasColumnName("quantity");
             entity.Property(e => e.StoreId).HasColumnName("store_id");
             entity.Property(e => e.UserId).HasColumnName("user_id");
+            entity.Property(e => e.Price).HasColumnName("price"); 
 
             entity.HasOne(d => d.Product).WithMany(p => p.UserCarts)
                 .HasForeignKey(d => d.ProductId)

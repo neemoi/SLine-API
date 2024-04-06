@@ -9,6 +9,8 @@ namespace Application.Services.Interfaces.IServices
 
         Task<List<UserCartResponseDto>> GetCartItemsAsync(string userId);
 
+        Task<List<GetProductsStoresResponseDto>> GetProductsAvailableStores(int productId);
+
         //Task<UserCartResponseDto> DeleteBacketProductsAsync(string userId);
 
         //Task<UserCartResponseDto> DeleteBasketProductByIdAsync(string userId, int productId);

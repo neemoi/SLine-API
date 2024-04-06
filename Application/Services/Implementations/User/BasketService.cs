@@ -46,5 +46,31 @@ namespace Application.Services.Implementations.User
                 throw;
             }
         }
+
+        public async Task<List<GetProductsStoresResponseDto>> GetProductsAvailableStores(int productId)
+        {
+            try
+            {
+                var warehouses = await _unitOfWork.BasketRepository.GetProductsAvailableStores(productId);
+
+                if (warehouses.Any())
+                {
+                    var resultDto = _mapper.Map<List<GetProductsStoresResponseDto>>(warehouses);
+
+                    resultDto.ForEach(dto => dto.ProductId = productId);
+
+                    return resultDto;
+                }
+                else
+                {
+                    throw new Exception($"Product not found for productId: ({productId})");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"{ex.Message}");
+                throw;
+            }
+        }
     }
 }
