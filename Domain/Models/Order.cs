@@ -1,10 +1,14 @@
-﻿namespace Persistance;
+﻿using Domain.Models;
+
+namespace Persistance;
 
 public partial class Order
 {
     public int OrderId { get; set; }
 
     public int? CartId { get; set; }
+
+    public int? PaymentId { get; set; }
 
     public int? DeliveryId { get; set; }
 
@@ -19,4 +23,6 @@ public partial class Order
     public virtual ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
 
     public virtual OrderStatus? Status { get; set; }
+
+    public virtual Payment? Payment { get; set; }
 }

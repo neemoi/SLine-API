@@ -1,10 +1,11 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Domain.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Persistance.Context;
 
-public partial class StoreLineContext : IdentityDbContext<User>
+public partial class StoreLineContext : IdentityDbContext<Users>
 {
     public StoreLineContext() { }
 
@@ -33,6 +34,8 @@ public partial class StoreLineContext : IdentityDbContext<User>
 
     public virtual DbSet<Warehouse> Warehouses { get; set; }
 
+    public virtual DbSet<Payment> Payments { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
 
@@ -42,22 +45,18 @@ public partial class StoreLineContext : IdentityDbContext<User>
 
         modelBuilder.Entity<IdentityUserToken<string>>().HasNoKey();
 
-        modelBuilder.Entity<Role>(entity =>
+        modelBuilder.Entity<Payment>(entity =>
         {
-            entity.HasIndex(e => e.NormalizedName, "RoleNameIndex").IsUnique();
+            entity.HasKey(e => e.Id).HasName("payment_pkey");
 
-            entity.Property(e => e.Name).HasMaxLength(256);
-            entity.Property(e => e.NormalizedName).HasMaxLength(256);
+            entity.ToTable("payments");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Type).HasColumnName("type");
+            entity.Property(e => e.Commission).HasColumnName("commission");
         });
 
-        modelBuilder.Entity<RoleClaim>(entity =>
-        {
-            entity.HasIndex(e => e.RoleId, "IX_AspNetRoleClaims_RoleId");
-
-            entity.HasOne(d => d.Role).WithMany(p => p.AspNetRoleClaims).HasForeignKey(d => d.RoleId);
-        });
-
-        modelBuilder.Entity<User>(entity =>
+        modelBuilder.Entity<Users>(entity =>
         {
             entity.HasIndex(e => e.NormalizedEmail, "EmailIndex");
 
@@ -69,40 +68,6 @@ public partial class StoreLineContext : IdentityDbContext<User>
             entity.Property(e => e.NormalizedUserName).HasMaxLength(256);
             entity.Property(e => e.UserName).HasMaxLength(256);
 
-            entity.HasMany(d => d.Roles).WithMany(p => p.Users)
-                .UsingEntity<Dictionary<string, object>>(
-                    "AspNetUserRole",
-                    r => r.HasOne<Role>().WithMany().HasForeignKey("RoleId"),
-                    l => l.HasOne<User>().WithMany().HasForeignKey("UserId"),
-                    j =>
-                    {
-                        j.HasKey("UserId", "RoleId");
-                        j.ToTable("AspNetUserRoles");
-                        j.HasIndex(new[] { "RoleId" }, "IX_AspNetUserRoles_RoleId");
-                    });
-        });
-
-        modelBuilder.Entity<UserClaim>(entity =>
-        {
-            entity.HasIndex(e => e.UserId, "IX_AspNetUserClaims_UserId");
-
-            entity.HasOne(d => d.User).WithMany(p => p.AspNetUserClaims).HasForeignKey(d => d.UserId);
-        });
-
-        modelBuilder.Entity<UserLogin>(entity =>
-        {
-            entity.HasKey(e => new { e.LoginProvider, e.ProviderKey });
-
-            entity.HasIndex(e => e.UserId, "IX_AspNetUserLogins_UserId");
-
-            entity.HasOne(d => d.User).WithMany(p => p.AspNetUserLogins).HasForeignKey(d => d.UserId);
-        });
-
-        modelBuilder.Entity<UserToken>(entity =>
-        {
-            entity.HasKey(e => new { e.UserId, e.LoginProvider, e.Name });
-
-            entity.HasOne(d => d.User).WithMany(p => p.AspNetUserTokens).HasForeignKey(d => d.UserId);
         });
 
         modelBuilder.Entity<Category>(entity =>
@@ -139,6 +104,7 @@ public partial class StoreLineContext : IdentityDbContext<User>
             entity.HasIndex(e => e.StoreId, "IX_delivery_options_store_id");
 
             entity.Property(e => e.DeliveryId).HasColumnName("delivery_id");
+            entity.Property(e => e.DeliveryType).HasColumnName("delivery_type");
             entity.Property(e => e.DeliveryPrice)
                 .HasPrecision(10, 2)
                 .HasColumnName("delivery_price");
@@ -154,6 +120,9 @@ public partial class StoreLineContext : IdentityDbContext<User>
         {
             entity.HasKey(e => e.OrderId).HasName("orders_pkey");
 
+            entity.Property(e => e.OrderId)
+                .HasColumnName("order_id");
+
             entity.ToTable("orders");
 
             entity.HasIndex(e => e.CartId, "IX_orders_cart_id");
@@ -163,6 +132,7 @@ public partial class StoreLineContext : IdentityDbContext<User>
             entity.HasIndex(e => e.StatusId, "IX_orders_status_id");
 
             entity.Property(e => e.OrderId).HasColumnName("order_id");
+            entity.Property(e => e.PaymentId).HasColumnName("payment_id");
             entity.Property(e => e.CartId).HasColumnName("cart_id");
             entity.Property(e => e.DeliveryId).HasColumnName("delivery_id");
             entity.Property(e => e.OrderDate)
@@ -182,6 +152,15 @@ public partial class StoreLineContext : IdentityDbContext<User>
             entity.HasOne(d => d.Status).WithMany(p => p.Orders)
                 .HasForeignKey(d => d.StatusId)
                 .HasConstraintName("orders_status_id_fkey");
+
+            entity.HasOne(d => d.Payment).WithMany(p => p.Orders)
+               .HasForeignKey(d => d.PaymentId)
+               .HasConstraintName("orders_payments_id_fkey");
+
+            //entity.HasOne(o => o.Payment)
+            //    .WithOne(p => p.Order)
+            //    .HasForeignKey<Order>(o => o.PaymentId)
+            //    .HasConstraintName("fk_order_payment_id");
         });
 
         modelBuilder.Entity<OrderItem>(entity =>
@@ -196,9 +175,12 @@ public partial class StoreLineContext : IdentityDbContext<User>
 
             entity.Property(e => e.ItemId).HasColumnName("item_id");
             entity.Property(e => e.OrderId).HasColumnName("order_id");
-            entity.Property(e => e.Price)
+            entity.Property(e => e.ProductPrice)
                 .HasPrecision(10, 2)
-                .HasColumnName("price");
+                .HasColumnName("product_price");
+            entity.Property(e => e.TotalPrice)
+                .HasPrecision(10, 2)
+                .HasColumnName("total_price");
             entity.Property(e => e.ProductId).HasColumnName("product_id");
             entity.Property(e => e.Quantity).HasColumnName("quantity");
             entity.Property(e => e.Store)
@@ -322,6 +304,8 @@ public partial class StoreLineContext : IdentityDbContext<User>
             entity.Property(e => e.Quantity).HasColumnName("quantity");
             entity.Property(e => e.StoreId).HasColumnName("store_id");
             entity.Property(e => e.UserId).HasColumnName("user_id");
+            entity.Property(e => e.Price).HasColumnName("price"); 
+            entity.Property(e => e.IsOrdered).HasColumnName("is_ordered");
 
             entity.HasOne(d => d.Product).WithMany(p => p.UserCarts)
                 .HasForeignKey(d => d.ProductId)
