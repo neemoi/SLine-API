@@ -1,4 +1,4 @@
-﻿using Application.DtoModels.Models.User;
+﻿using Application.DtoModels.Models.User.Cart;
 using Application.Services.Interfaces.IServices;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,11 +16,11 @@ namespace StoreLineAPI.Controllers
         }
 
         [HttpPost("/AddProduct")]
-        public async Task<IActionResult> AddProductToCartAsync(CartDto model)
+        public async Task<IActionResult> AddProductToBasketAsync(BasketDto model)
         {
             try
             {
-                var result = await _basketService.AddProductToCartAsync(model);
+                var result = await _basketService.AddProductToBasketAsync(model);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -29,12 +29,26 @@ namespace StoreLineAPI.Controllers
             }
         }
 
-        [HttpGet("/CartItems")]
-        public async Task<IActionResult> GetCartItemsAsync(string userId)
+        [HttpPut("/UpdateQuantity")]
+        public async Task<IActionResult> UpdateBasketItemQuantityAsync(UpdateBasketItemDto model)
         {
             try
             {
-                var result = await _basketService.GetCartItemsAsync(userId);
+                var result = await _basketService.UpdateBasketItemQuantityAsync(model);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
+        [HttpGet("/BasketItems")]
+        public async Task<IActionResult> GetBasketItemsAsync(string userId)
+        {
+            try
+            {
+                var result = await _basketService.GetBasketItemsAsync(userId);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -58,11 +72,11 @@ namespace StoreLineAPI.Controllers
         }
 
         [HttpDelete("/RemoveProduct")]
-        public async Task<IActionResult> RemoveProductByIdCartAsync(DeleteCartProductDto model)
+        public async Task<IActionResult> RemoveProductBasketAsync(DeleteBasketProductDto model)
         {
             try
             {
-                var result = await _basketService.RemoveProductByIdCartAsync(model);
+                var result = await _basketService.RemoveProductBasketAsync(model);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -71,12 +85,12 @@ namespace StoreLineAPI.Controllers
             }
         }
 
-        [HttpDelete("/RemoveCart/{userId}")]
-        public async Task<IActionResult> RemoveUserCartAsync(string userId)
+        [HttpDelete("/RemoveBasket/{userId}")]
+        public async Task<IActionResult> RemoveAllUserBasketAsync(string userId)
         {
             try
             {
-                var result = await _basketService.RemoveUserCartAsync(userId);
+                var result = await _basketService.RemoveAllUserBasketAsync(userId);
                 return Ok(result);
             }
             catch (Exception ex)

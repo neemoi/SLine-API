@@ -1,6 +1,4 @@
-﻿
-
-namespace Application.DtoModels.Models.User
+﻿namespace Application.DtoModels.Models.User.Order
 {
     public class CreateOrder
     {

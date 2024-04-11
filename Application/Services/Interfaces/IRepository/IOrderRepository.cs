@@ -1,4 +1,4 @@
-﻿using Application.DtoModels.Models.User;
+﻿using Application.DtoModels.Models.User.Order;
 using Persistance;
 
 namespace Application.Services.Interfaces.IRepository

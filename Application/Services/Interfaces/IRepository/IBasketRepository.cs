@@ -1,18 +1,20 @@
-﻿using Application.DtoModels.Models.User;
+﻿using Application.DtoModels.Models.User.Cart;
 using Persistance;
 
 namespace Application.Services.Interfaces.IRepository
 {
     public interface IBasketRepository
     {
-        Task<UserCart> AddProductToCartAsync(CartDto model);
+        Task<UserCart> AddProductToBasketAsync(BasketDto model);
 
-        Task<List<UserCart>> GetCartItemsAsync(string userId);
+        Task<List<UserCart>> GetBasketItemsAsync(string userId);
 
         Task<List<Warehouse>> GetProductsAvailableStores(int productId);
 
-        Task<UserCart> RemoveProductByIdCartAsync(DeleteCartProductDto model);
+        Task<UserCart> UpdateBasketItemQuantityAsync(UpdateBasketItemDto model);
 
-        Task<List<UserCart>> RemoveUserCartAsync(string userId);
+        Task<UserCart> RemoveProductBasketAsync(DeleteBasketProductDto model);
+
+        Task<List<UserCart>> RemoveAllUserBasketAsync(string userId);
     }
 }

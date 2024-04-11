@@ -1,19 +1,20 @@
-﻿using Application.DtoModels.Models.User;
+﻿using Application.DtoModels.Models.User.Cart;
 using Application.DtoModels.Response.User;
-using Persistance;
 
 namespace Application.Services.Interfaces.IServices
 {
     public interface IBasketService
     {
-        Task<UserCartResponseDto> AddProductToCartAsync(CartDto model);
+        Task<UserBasketResponseDto> AddProductToBasketAsync(BasketDto model);
 
-        Task<List<UserCartResponseDto>> GetCartItemsAsync(string userId);
+        Task<List<UserBasketResponseDto>> GetBasketItemsAsync(string userId);
 
         Task<List<GetProductsStoresResponseDto>> GetProductsAvailableStores(int productId);
 
-        Task<UserCartResponseDto> RemoveProductByIdCartAsync(DeleteCartProductDto model);
+        Task<UserBasketResponseDto> UpdateBasketItemQuantityAsync(UpdateBasketItemDto model);
 
-        Task<List<UserCartResponseDto>> RemoveUserCartAsync(string userId);
+        Task<UserBasketResponseDto> RemoveProductBasketAsync(DeleteBasketProductDto model);
+
+        Task<List<UserBasketResponseDto>> RemoveAllUserBasketAsync(string userId);
     }
 }

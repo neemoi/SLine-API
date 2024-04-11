@@ -1,4 +1,4 @@
-﻿using Application.DtoModels.Models.User;
+﻿using Application.DtoModels.Models.User.Cart;
 using Application.Services.Interfaces.IRepository;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
@@ -17,7 +17,7 @@ namespace Persistance.Repository.User
             _mapper = mapper;
         }
 
-        public async Task<UserCart> AddProductToCartAsync(CartDto model)
+        public async Task<UserCart> AddProductToBasketAsync(BasketDto model)
         {
             try
             {
@@ -59,12 +59,12 @@ namespace Persistance.Repository.User
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error in Repository -> AddProductToCartAsync: {ex.Message}");
+                Console.WriteLine($"Error in Repository -> AddProductToBasketAsync: {ex.Message}");
                 throw;
             }
         }
 
-        public async Task<List<UserCart>> GetCartItemsAsync(string userId)
+        public async Task<List<UserCart>> GetBasketItemsAsync(string userId)
         {
             try
             {
@@ -90,7 +90,7 @@ namespace Persistance.Repository.User
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error in Repository -> GetCartItemsAsync: {ex.Message}");
+                Console.WriteLine($"Error in Repository -> GetBasketItemsAsync: {ex.Message}");
                 throw;
             };
         }
@@ -127,7 +127,7 @@ namespace Persistance.Repository.User
             }
         }
 
-        public async Task<UserCart> RemoveProductByIdCartAsync(DeleteCartProductDto model)
+        public async Task<UserCart> RemoveProductBasketAsync(DeleteBasketProductDto model)
         {
             try
             {
@@ -163,12 +163,12 @@ namespace Persistance.Repository.User
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error in Repository -> RemoveProductByIdCartAsync: {ex.Message}");
+                Console.WriteLine($"Error in Repository -> RemoveProductByIdBasketAsync: {ex.Message}");
                 throw;
             }
         }
 
-        public async Task<List<UserCart>> RemoveUserCartAsync(string userId)
+        public async Task<List<UserCart>> RemoveAllUserBasketAsync(string userId)
         {
             try
             {
@@ -196,7 +196,41 @@ namespace Persistance.Repository.User
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error in Repository -> RemoveUserCartAsync: {ex.Message}");
+                Console.WriteLine($"Error in Repository -> RemoveUserBasketAsync: {ex.Message}");
+                throw;
+            }
+        }
+
+        public async Task<UserCart> UpdateBasketItemQuantityAsync(UpdateBasketItemDto model)
+        {
+            try
+            {
+                var cartItem = await _storeLineContext.UserCarts
+                    .Include(s => s.Store)
+                    .Include(p => p.Product)
+                    .FirstOrDefaultAsync(c => c.UserId == model.UserId &&
+                                              c.ProductId == model.ProductId &&
+                                              c.StoreId == model.StoreId);
+
+                if (cartItem != null)
+                {
+                    cartItem.Quantity = model.Quantity;
+
+                    await _storeLineContext.SaveChangesAsync();
+
+                    return cartItem;
+                }
+                else
+                {
+                    throw new Exception($"CartItem not found for " +
+                        $"UserId: {model.UserId}, " +
+                        $"ProductId: {model.ProductId}, " +
+                        $"StoreId: {model.StoreId}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in Repository -> UpdateBasketItemQuantityAsync: {ex.Message}");
                 throw;
             }
         }

@@ -1,8 +1,9 @@
-﻿using Application.DtoModels.Models.User;
+﻿using Application.DtoModels.Models.User.Cart;
 using Application.DtoModels.Response.User;
 using Application.Services.Interfaces.IServices;
 using Application.UnitOfWork;
 using AutoMapper;
+using Persistance;
 
 namespace Application.Services.Implementations.User
 {
@@ -17,32 +18,32 @@ namespace Application.Services.Implementations.User
             _mapper = mapper;
         }
 
-        public async Task<UserCartResponseDto> AddProductToCartAsync(CartDto model)
+        public async Task<UserBasketResponseDto> AddProductToBasketAsync(BasketDto model)
         {
             try
             {
-                var result = await _unitOfWork.BasketRepository.AddProductToCartAsync(model);
+                var result = await _unitOfWork.BasketRepository.AddProductToBasketAsync(model);
 
-                return _mapper.Map<UserCartResponseDto>(result);
+                return _mapper.Map<UserBasketResponseDto>(result);
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error in Service -> AddProductToCartAsync: {ex.Message}");
+                Console.WriteLine($"Error in Service -> AddProductToBasketAsync: {ex.Message}");
                 throw;
             }
         }
 
-        public async Task<List<UserCartResponseDto>> GetCartItemsAsync(string userId)
+        public async Task<List<UserBasketResponseDto>> GetBasketItemsAsync(string userId)
         {
             try
             {
-                var result = await _unitOfWork.BasketRepository.GetCartItemsAsync(userId);
+                var result = await _unitOfWork.BasketRepository.GetBasketItemsAsync(userId);
 
-                return _mapper.Map<List<UserCartResponseDto>>(result);
+                return _mapper.Map<List<UserBasketResponseDto>>(result);
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error in Service -> GetCartItemsAsync: {ex.Message}");
+                Console.WriteLine($"Error in Service -> GetBasketItemsAsync: {ex.Message}");
                 throw;
             }
         }
@@ -73,33 +74,47 @@ namespace Application.Services.Implementations.User
             }
         }
 
-        public async Task<UserCartResponseDto> RemoveProductByIdCartAsync(DeleteCartProductDto model)
+        public async Task<UserBasketResponseDto> RemoveProductBasketAsync(DeleteBasketProductDto model)
         {
             try
             {
-                var updatedCartItem = await _unitOfWork.BasketRepository.RemoveProductByIdCartAsync(model);
+                var updatedCartItem = await _unitOfWork.BasketRepository.RemoveProductBasketAsync(model);
 
-                return _mapper.Map<UserCartResponseDto>(updatedCartItem); ;
+                return _mapper.Map<UserBasketResponseDto>(updatedCartItem); ;
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error in Service -> RemoveProductByIdCartAsync: {ex.Message}");
+                Console.WriteLine($"Error in Service -> RemoveProductByIdBasketAsync: {ex.Message}");
                 throw;
             }
         }
 
-        public async Task<List<UserCartResponseDto>> RemoveUserCartAsync(string userId)
+        public async Task<List<UserBasketResponseDto>> RemoveAllUserBasketAsync(string userId)
         {
             try
             {
-                var updatedCartItem = await _unitOfWork.BasketRepository.RemoveUserCartAsync(userId);
+                var updatedCartItem = await _unitOfWork.BasketRepository.RemoveAllUserBasketAsync(userId);
 
-                return _mapper.Map<List<UserCartResponseDto>>(updatedCartItem); ;
+                return _mapper.Map<List<UserBasketResponseDto>>(updatedCartItem); ;
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error in Service -> RemoveUserCartAsync: {ex.Message}");
+                Console.WriteLine($"Error in Service -> RemoveUserBasketAsync: {ex.Message}");
                 throw;
+            }
+        }
+
+        public async Task<UserBasketResponseDto> UpdateBasketItemQuantityAsync(UpdateBasketItemDto model)
+        {
+            try
+            {
+                var  UpdateCartItemQuantity = await _unitOfWork.BasketRepository.UpdateBasketItemQuantityAsync(model);
+
+                return _mapper.Map<UserBasketResponseDto>(UpdateCartItemQuantity); ;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error in Service -> UpdateBasketItemQuantityAsync: {ex.Message}");
             }
         }
     }

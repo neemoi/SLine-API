@@ -1,4 +1,4 @@
-﻿using Application.DtoModels.Models.User;
+﻿using Application.DtoModels.Models.User.Order;
 using Application.Services.Interfaces.IRepository;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;

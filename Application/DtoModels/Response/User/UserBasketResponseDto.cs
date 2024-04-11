@@ -1,6 +1,6 @@
 ﻿namespace Application.DtoModels.Response.User
 {
-    public class UserCartResponseDto
+    public class UserBasketResponseDto
     {
         public int CartId {  get; set; }
 

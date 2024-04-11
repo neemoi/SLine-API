@@ -1,4 +1,4 @@
-﻿namespace Application.DtoModels.Models.User
+﻿namespace Application.DtoModels.Models.User.Category
 {
     public class SubcategoryDto
     {

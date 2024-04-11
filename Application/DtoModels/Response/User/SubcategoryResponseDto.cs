@@ -1,4 +1,4 @@
-﻿using Application.DtoModels.Models.User;
+﻿using Application.DtoModels.Models.User.Product;
 
 namespace Application.DtoModels.Response.User
 {
