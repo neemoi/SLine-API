@@ -2,7 +2,17 @@
 {
     public class UserCartResponseDto
     {
+        public int CartId {  get; set; }
+
         public int ProductId { get; set; }
+        
+        public int StoreId { get; set; }
+
+        public string? StoreName { get; set; }
+
+        public string? City { get; set; }
+
+        public string? Address { get; set; }
 
         public string? ProductName { get; set; }
 

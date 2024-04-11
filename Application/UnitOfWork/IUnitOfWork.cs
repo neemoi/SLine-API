@@ -9,6 +9,9 @@ namespace Application.UnitOfWork
         public ICatalogRepository CatalogRepository { get; }
 
         public IBasketRepository BasketRepository { get; }
+
+        public IOrderRepository OrderRepository { get; }
+
         Task SaveChangesAsync();
     }
 }

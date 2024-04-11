@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Persistance.Context;
@@ -11,9 +12,11 @@ using Persistance.Context;
 namespace Persistance.Migrations
 {
     [DbContext(typeof(StoreLineContext))]
-    partial class StoreLineContextModelSnapshot : ModelSnapshot
+    [Migration("20240409213920_CreateTablePaymentAndAddRowsFromOrderItem")]
+    partial class CreateTablePaymentAndAddRowsFromOrderItem
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,7 +43,7 @@ namespace Persistance.Migrations
                         .HasColumnName("type");
 
                     b.HasKey("Id")
-                        .HasName("payment_pkey");
+                        .HasName("payments_pkey");
 
                     b.ToTable("payments", (string)null);
                 });
@@ -272,7 +275,8 @@ namespace Persistance.Migrations
                     b.HasKey("OrderId")
                         .HasName("orders_pkey");
 
-                    b.HasIndex("PaymentId");
+                    b.HasIndex("PaymentId")
+                        .IsUnique();
 
                     b.HasIndex(new[] { "CartId" }, "IX_orders_cart_id");
 
@@ -489,10 +493,6 @@ namespace Persistance.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("CartId"));
 
-                    b.Property<bool>("IsOrdered")
-                        .HasColumnType("boolean")
-                        .HasColumnName("is_ordered");
-
                     b.Property<decimal?>("Price")
                         .HasColumnType("numeric")
                         .HasColumnName("price");
@@ -649,9 +649,9 @@ namespace Persistance.Migrations
                         .HasConstraintName("orders_delivery_id_fkey");
 
                     b.HasOne("Domain.Models.Payment", "Payment")
-                        .WithMany("Orders")
-                        .HasForeignKey("PaymentId")
-                        .HasConstraintName("orders_payments_id_fkey");
+                        .WithOne("Order")
+                        .HasForeignKey("Persistance.Order", "PaymentId")
+                        .HasConstraintName("fk_order_payment_id");
 
                     b.HasOne("Persistance.OrderStatus", "Status")
                         .WithMany("Orders")
@@ -757,7 +757,7 @@ namespace Persistance.Migrations
 
             modelBuilder.Entity("Domain.Models.Payment", b =>
                 {
-                    b.Navigation("Orders");
+                    b.Navigation("Order");
                 });
 
             modelBuilder.Entity("Persistance.Category", b =>

@@ -99,11 +99,13 @@ internal class Program
         builder.Services.AddScoped<IStoreService, StoreService>();
         builder.Services.AddScoped<ICatalogService, CatalogService>();
         builder.Services.AddScoped<IBasketService, BasketService>();
+        builder.Services.AddScoped<IOrderService, OrderService>();
 
         //Registering Scoped Repositories
         builder.Services.AddScoped<IStoreRepository, StoresRepository>();
         builder.Services.AddScoped<ICatalogRepository, CatalogRepository>();
         builder.Services.AddScoped<IBasketRepository, BasketReporitory>();
+        builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 
         // Identity Configuration
         builder.Services.AddIdentity<Users, IdentityRole>()

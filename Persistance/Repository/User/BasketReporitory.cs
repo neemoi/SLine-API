@@ -48,6 +48,7 @@ namespace Persistance.Repository.User
                     var newCartItem = _mapper.Map<UserCart>(model);
 
                     newCartItem.Price = product.Warehouses.FirstOrDefault()?.ProductPrice;
+                    newCartItem.IsOrdered = false;
 
                     await _storeLineContext.UserCarts.AddAsync(newCartItem);
 
@@ -67,7 +68,10 @@ namespace Persistance.Repository.User
         {
             try
             {
-                var userExist = await _storeLineContext.Users.FirstOrDefaultAsync(i => i.Id == userId)
+                var userExist = await _storeLineContext.Users
+                    .Include(s => s.UserCarts)
+                        .ThenInclude(s => s.Store)
+                    .FirstOrDefaultAsync(i => i.Id == userId)
                     ?? throw new Exception($"User by id ({userId}) not found");
 
                 var result = await _storeLineContext.UserCarts
@@ -129,6 +133,7 @@ namespace Persistance.Repository.User
             {
                 var cartItem = await _storeLineContext.UserCarts
                     .Include(p => p.Product)
+                    .Include(w => w.Store)
                     .FirstOrDefaultAsync(c => c.ProductId == model.ProductId && c.UserId == model.UserId);
 
                 if (cartItem != null)
@@ -172,6 +177,7 @@ namespace Persistance.Repository.User
 
                 var cartItems = await _storeLineContext.UserCarts
                     .Include(p => p.Product)
+                    .Include(w => w.Store)
                     .Where(c => c.UserId == userId)
                     .ToListAsync();
 

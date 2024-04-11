@@ -10,7 +10,9 @@ public partial class OrderItem
 
     public int? Quantity { get; set; }
 
-    public decimal? Price { get; set; }
+    public decimal? ProductPrice { get; set; }
+
+    public decimal? TotalPrice { get; set; }
 
     public string? Store { get; set; }
 

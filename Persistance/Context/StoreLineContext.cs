@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Domain.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -33,6 +34,8 @@ public partial class StoreLineContext : IdentityDbContext<Users>
 
     public virtual DbSet<Warehouse> Warehouses { get; set; }
 
+    public virtual DbSet<Payment> Payments { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
 
@@ -42,6 +45,16 @@ public partial class StoreLineContext : IdentityDbContext<Users>
 
         modelBuilder.Entity<IdentityUserToken<string>>().HasNoKey();
 
+        modelBuilder.Entity<Payment>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("payment_pkey");
+
+            entity.ToTable("payments");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Type).HasColumnName("type");
+            entity.Property(e => e.Commission).HasColumnName("commission");
+        });
 
         modelBuilder.Entity<Users>(entity =>
         {
@@ -86,7 +99,7 @@ public partial class StoreLineContext : IdentityDbContext<Users>
         {
             entity.HasKey(e => e.DeliveryId).HasName("delivery_options_pkey");
 
-            entity.ToTable("options");
+            entity.ToTable("delivery_options");
 
             entity.HasIndex(e => e.StoreId, "IX_delivery_options_store_id");
 
@@ -107,6 +120,9 @@ public partial class StoreLineContext : IdentityDbContext<Users>
         {
             entity.HasKey(e => e.OrderId).HasName("orders_pkey");
 
+            entity.Property(e => e.OrderId)
+                .HasColumnName("order_id");
+
             entity.ToTable("orders");
 
             entity.HasIndex(e => e.CartId, "IX_orders_cart_id");
@@ -116,6 +132,7 @@ public partial class StoreLineContext : IdentityDbContext<Users>
             entity.HasIndex(e => e.StatusId, "IX_orders_status_id");
 
             entity.Property(e => e.OrderId).HasColumnName("order_id");
+            entity.Property(e => e.PaymentId).HasColumnName("payment_id");
             entity.Property(e => e.CartId).HasColumnName("cart_id");
             entity.Property(e => e.DeliveryId).HasColumnName("delivery_id");
             entity.Property(e => e.OrderDate)
@@ -135,6 +152,15 @@ public partial class StoreLineContext : IdentityDbContext<Users>
             entity.HasOne(d => d.Status).WithMany(p => p.Orders)
                 .HasForeignKey(d => d.StatusId)
                 .HasConstraintName("orders_status_id_fkey");
+
+            entity.HasOne(d => d.Payment).WithMany(p => p.Orders)
+               .HasForeignKey(d => d.PaymentId)
+               .HasConstraintName("orders_payments_id_fkey");
+
+            //entity.HasOne(o => o.Payment)
+            //    .WithOne(p => p.Order)
+            //    .HasForeignKey<Order>(o => o.PaymentId)
+            //    .HasConstraintName("fk_order_payment_id");
         });
 
         modelBuilder.Entity<OrderItem>(entity =>
@@ -149,9 +175,12 @@ public partial class StoreLineContext : IdentityDbContext<Users>
 
             entity.Property(e => e.ItemId).HasColumnName("item_id");
             entity.Property(e => e.OrderId).HasColumnName("order_id");
-            entity.Property(e => e.Price)
+            entity.Property(e => e.ProductPrice)
                 .HasPrecision(10, 2)
-                .HasColumnName("price");
+                .HasColumnName("product_price");
+            entity.Property(e => e.TotalPrice)
+                .HasPrecision(10, 2)
+                .HasColumnName("total_price");
             entity.Property(e => e.ProductId).HasColumnName("product_id");
             entity.Property(e => e.Quantity).HasColumnName("quantity");
             entity.Property(e => e.Store)
@@ -276,6 +305,7 @@ public partial class StoreLineContext : IdentityDbContext<Users>
             entity.Property(e => e.StoreId).HasColumnName("store_id");
             entity.Property(e => e.UserId).HasColumnName("user_id");
             entity.Property(e => e.Price).HasColumnName("price"); 
+            entity.Property(e => e.IsOrdered).HasColumnName("is_ordered");
 
             entity.HasOne(d => d.Product).WithMany(p => p.UserCarts)
                 .HasForeignKey(d => d.ProductId)

@@ -12,7 +12,11 @@ namespace Application.MappingProfile.User
             CreateMap<CartDto, UserCartResponseDto>();
             CreateMap<CartDto, UserCart>();
             CreateMap<UserCart, UserCartResponseDto>()
+               .ForMember(dest => dest.CartId, opt => opt.MapFrom(src => src.CartId))
                .ForMember(dest => dest.ProductName, opt => opt.MapFrom(src => src.Product.ProductName))
+               .ForMember(dest => dest.StoreName, opt => opt.MapFrom(src => src.Store.StoreName))
+               .ForMember(dest => dest.City, opt => opt.MapFrom(src => src.Store.City))
+               .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.Store.Address))
                .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.Price)); 
             CreateMap<Warehouse, GetProductsStoresResponseDto>()
                .ForMember(dest => dest.StoreId, opt => opt.MapFrom(src => src.StoreId))
