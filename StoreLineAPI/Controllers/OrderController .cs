@@ -29,5 +29,33 @@ namespace StoreLineAPI.Controllers
                 throw;
             }
         }
+
+        [HttpGet("GetOrders/{userId}")]
+        public async Task<IActionResult> GetOrdersByUserId(string userId)
+        {
+            try
+            {
+                var orders = await _orderService.GetOrdersByUserIdAsync(userId);
+                return Ok(orders);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
+        [HttpDelete("CancelOrder")]
+        public async Task<IActionResult> CancelOrderAsync(int orderId, string userId)
+        {
+            try
+            {
+                var orders = await _orderService.CancelOrderAsync(orderId, userId);
+                return Ok(orders);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
     }
 }

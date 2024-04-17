@@ -7,6 +7,8 @@ namespace Application.Services.Interfaces.IRepository
     {
         Task<Order> CreateOrderAsync(CreateOrder model);
 
-        //Task<UserCart> GetUserCartByUserIdAsync(string userId);
+        Task<List<Order>> GetOrdersByUserIdAsync(string userId);
+
+        Task<Order> CancelOrderAsync(int orderId, string userId);
     }
 }

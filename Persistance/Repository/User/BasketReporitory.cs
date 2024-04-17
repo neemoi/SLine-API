@@ -37,16 +37,45 @@ namespace Persistance.Repository.User
 
                 if (existingCartItem != null)
                 {
-                    existingCartItem.Quantity += model.Quantity;
+                    if (existingCartItem.IsOrdered)
+                    {
+                        if (model.Quantity <= 0)
+                        {
+                            throw new Exception($"Quantity of product with ID {model.ProductId} cannot be zero or negative.");
+                        }
 
-                    await _storeLineContext.SaveChangesAsync();
+                        var newCartItem = _mapper.Map<UserCart>(model);
+                        newCartItem.Price = product.Warehouses.FirstOrDefault()?.ProductPrice;
+                        newCartItem.IsOrdered = false;
 
-                    return existingCartItem; 
+                        await _storeLineContext.UserCarts.AddAsync(newCartItem);
+
+                        await _storeLineContext.SaveChangesAsync();
+
+                        return newCartItem;
+                    }
+                    else
+                    {
+                        existingCartItem.Quantity += model.Quantity;
+
+                        if (existingCartItem.Quantity <= 0)
+                        {
+                            throw new Exception($"Quantity of product with ID {model.ProductId} in the cart cannot be zero or negative.");
+                        }
+
+                        await _storeLineContext.SaveChangesAsync();
+
+                        return existingCartItem;
+                    }
                 }
                 else
                 {
-                    var newCartItem = _mapper.Map<UserCart>(model);
+                    if (model.Quantity <= 0)
+                    {
+                        throw new Exception($"Quantity of product with ID {model.ProductId} cannot be zero or negative.");
+                    }
 
+                    var newCartItem = _mapper.Map<UserCart>(model);
                     newCartItem.Price = product.Warehouses.FirstOrDefault()?.ProductPrice;
                     newCartItem.IsOrdered = false;
 
@@ -54,7 +83,7 @@ namespace Persistance.Repository.User
 
                     await _storeLineContext.SaveChangesAsync();
 
-                    return newCartItem; 
+                    return newCartItem;
                 }
             }
             catch (Exception ex)

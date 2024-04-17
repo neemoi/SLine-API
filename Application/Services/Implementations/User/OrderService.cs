@@ -17,6 +17,20 @@ namespace Application.Services.Implementations.User
             _mapper = mapper;
         }
 
+        public async Task<OrderResponseDto> CancelOrderAsync(int orderId, string userId)
+        {
+            try
+            {
+                var result = await _unitOfWork.OrderRepository.CancelOrderAsync(orderId, userId);
+
+                return _mapper.Map<OrderResponseDto>(result);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error in Service -> CancelOrderAsync: {ex.Message}");
+            }
+        }
+
         public async Task<OrderResponseDto> CreateOrderAsync(CreateOrder model)
         {
             try
@@ -31,5 +45,18 @@ namespace Application.Services.Implementations.User
             }
         }
 
+        public async Task<List<OrderResponseDto>> GetOrdersByUserIdAsync(string userId)
+        {
+            try
+            {
+                var result = await _unitOfWork.OrderRepository.GetOrdersByUserIdAsync(userId);
+
+                return _mapper.Map<List<OrderResponseDto>>(result);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error in Service -> GetOrdersByUserIdAsync: {ex.Message}");
+            }
+        }
     }
 }
