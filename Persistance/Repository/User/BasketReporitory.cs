@@ -1,5 +1,5 @@
 ﻿using Application.DtoModels.Models.User.Cart;
-using Application.Services.Interfaces.IRepository;
+using Application.Services.Interfaces.IRepository.User;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Persistance.Context;

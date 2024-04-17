@@ -1,5 +1,5 @@
-﻿using Application.DtoModels.Response.User;
-using Application.Services.Interfaces.IServices;
+﻿using Application.DtoModels.Response.User.Store;
+using Application.Services.Interfaces.IServices.User;
 using Application.UnitOfWork;
 using AutoMapper;
 

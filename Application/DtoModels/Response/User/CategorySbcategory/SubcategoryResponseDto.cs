@@ -1,6 +1,6 @@
 ﻿using Application.DtoModels.Models.User.Product;
 
-namespace Application.DtoModels.Response.User
+namespace Application.DtoModels.Response.User.CategorySbcategory
 {
     public class SubcategoryResponseDto
     {

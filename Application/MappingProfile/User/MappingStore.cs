@@ -1,4 +1,4 @@
-﻿using Application.DtoModels.Response.User;
+﻿using Application.DtoModels.Response.User.Store;
 using AutoMapper;
 using Persistance;
 

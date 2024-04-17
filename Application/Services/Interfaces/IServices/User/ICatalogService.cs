@@ -1,6 +1,7 @@
-﻿using Application.DtoModels.Response.User;
+﻿using Application.DtoModels.Response.User.CategorySbcategory;
+using Application.DtoModels.Response.User.Product;
 
-namespace Application.Services.Interfaces.IServices
+namespace Application.Services.Interfaces.IServices.User
 {
     public interface ICatalogService
     {

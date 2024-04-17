@@ -1,6 +1,6 @@
 ﻿using Persistance;
 
-namespace Application.Services.Interfaces.IRepository
+namespace Application.Services.Interfaces.IRepository.User
 {
     public interface IStoreRepository
     {

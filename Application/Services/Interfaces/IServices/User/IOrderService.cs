@@ -1,7 +1,7 @@
 ﻿using Application.DtoModels.Models.User.Order;
-using YourNamespace.DtoModels.Response;
+using Application.DtoModels.Response.User.Order;
 
-namespace Application.Services.Interfaces.IServices
+namespace Application.Services.Interfaces.IServices.User
 {
     public interface IOrderService
     {

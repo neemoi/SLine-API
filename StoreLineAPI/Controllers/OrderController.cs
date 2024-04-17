@@ -1,12 +1,12 @@
 ﻿using Application.DtoModels.Models.User.Order;
-using Application.Services.Interfaces.IServices;
+using Application.Services.Interfaces.IServices.User;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace StoreLineAPI.Controllers
 {
     [ApiController]
-    [Route("/Orders")]
+    [Route("/Order")]
     //[Authorize]
     public class OrderController : ControllerBase
     {

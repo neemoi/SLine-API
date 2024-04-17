@@ -2,7 +2,7 @@
 using Application.DtoModels.Response.Authorization;
 using Microsoft.AspNetCore.Http;
 
-namespace Application.Services.Interfaces.IServices
+namespace Application.Services.Interfaces.IServices.User
 {
     public interface IAccountService
     {

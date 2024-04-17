@@ -1,7 +1,7 @@
 ﻿using Application.DtoModels.Models.User.Order;
+using Application.DtoModels.Response.User.Order;
 using AutoMapper;
 using Persistance;
-using YourNamespace.DtoModels.Response;
 
 namespace Application.MappingProfile.User
 {

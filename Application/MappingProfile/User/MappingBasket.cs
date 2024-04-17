@@ -1,5 +1,6 @@
 ﻿using Application.DtoModels.Models.User.Cart;
-using Application.DtoModels.Response.User;
+using Application.DtoModels.Response.User.Basket;
+using Application.DtoModels.Response.User.Product;
 using AutoMapper;
 using Persistance;
 

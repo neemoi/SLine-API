@@ -1,8 +1,8 @@
 ﻿using Application.DtoModels.Models.User.Order;
-using Application.Services.Interfaces.IServices;
+using Application.DtoModels.Response.User.Order;
+using Application.Services.Interfaces.IServices.User;
 using Application.UnitOfWork;
 using AutoMapper;
-using YourNamespace.DtoModels.Response;
 
 namespace Application.Services.Implementations.User
 {

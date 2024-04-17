@@ -1,6 +1,6 @@
-﻿using Application.DtoModels.Response.User;
+﻿using Application.DtoModels.Response.User.Store;
 
-namespace Application.Services.Interfaces.IServices
+namespace Application.Services.Interfaces.IServices.User
 {
     public interface IStoreService
     {

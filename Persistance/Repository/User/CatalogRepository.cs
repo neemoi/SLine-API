@@ -1,4 +1,4 @@
-﻿using Application.Services.Interfaces.IRepository;
+﻿using Application.Services.Interfaces.IRepository.User;
 using Microsoft.EntityFrameworkCore;
 using Persistance.Context;
 

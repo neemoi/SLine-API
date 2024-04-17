@@ -1,6 +1,6 @@
 ﻿using Application.DtoModels.Models.Authorization;
 using Application.DtoModels.Response.Authorization;
-using Application.Services.Interfaces.IServices;
+using Application.Services.Interfaces.IServices.User;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;

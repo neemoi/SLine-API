@@ -1,5 +1,6 @@
-﻿using Application.DtoModels.Response.User;
-using Application.Services.Interfaces.IServices;
+﻿using Application.DtoModels.Response.User.CategorySbcategory;
+using Application.DtoModels.Response.User.Product;
+using Application.Services.Interfaces.IServices.User;
 using Application.UnitOfWork;
 using AutoMapper;
 

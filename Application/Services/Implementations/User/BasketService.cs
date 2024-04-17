@@ -1,6 +1,7 @@
 ﻿using Application.DtoModels.Models.User.Cart;
-using Application.DtoModels.Response.User;
-using Application.Services.Interfaces.IServices;
+using Application.DtoModels.Response.User.Basket;
+using Application.DtoModels.Response.User.Product;
+using Application.Services.Interfaces.IServices.User;
 using Application.UnitOfWork;
 using AutoMapper;
 

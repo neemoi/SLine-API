@@ -1,4 +1,4 @@
-﻿namespace Application.DtoModels.Response.User
+﻿namespace Application.DtoModels.Response.User.Product
 {
     public class ProductResponseDto
     {

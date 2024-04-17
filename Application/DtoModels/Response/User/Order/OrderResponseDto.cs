@@ -1,4 +1,4 @@
-﻿namespace YourNamespace.DtoModels.Response
+﻿namespace Application.DtoModels.Response.User.Order
 {
     public class OrderResponseDto
     {

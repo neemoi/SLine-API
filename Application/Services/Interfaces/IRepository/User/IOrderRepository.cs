@@ -1,7 +1,7 @@
 ﻿using Application.DtoModels.Models.User.Order;
 using Persistance;
 
-namespace Application.Services.Interfaces.IRepository
+namespace Application.Services.Interfaces.IRepository.User
 {
     public interface IOrderRepository
     {
