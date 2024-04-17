@@ -55,6 +55,7 @@ namespace Persistance.Repository.User
                         .ToListAsync();
 
                     var hasDeliveryOption = deliveryOptions.Any(d => d.DeliveryId == model.DeliveryId);
+
                     if (!hasDeliveryOption)
                     {
                         throw new Exception($"Store with ID {model.StoreId} does not offer delivery option with ID {model.DeliveryId}.");
@@ -105,7 +106,7 @@ namespace Persistance.Repository.User
             }
             catch (Exception ex)
             {
-                throw new Exception($"Failed to create order: {ex.Message}");
+                throw new Exception($"Error in OrderRepository -> CreateOrderAsync: {ex.Message}");
             }
         }
 
@@ -136,7 +137,7 @@ namespace Persistance.Repository.User
             }
             catch (Exception ex)
             {
-                throw new Exception($"Error in Repository -> GetOrdersByUserIdAsync: {ex.Message}");
+                throw new Exception($"Error in OrderRepository -> GetOrdersByUserIdAsync: {ex.Message}");
             }
         }
 
@@ -192,7 +193,7 @@ namespace Persistance.Repository.User
             }
             catch (Exception ex)
             {
-                throw new Exception($"Failed to cancel order: {ex.Message}");
+                throw new Exception($"Error in OrderRepository -> CancelOrderAsync: {ex.Message}");
             }
         }
 

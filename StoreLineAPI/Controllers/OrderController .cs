@@ -1,11 +1,13 @@
 ﻿using Application.DtoModels.Models.User.Order;
 using Application.Services.Interfaces.IServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace StoreLineAPI.Controllers
 {
     [ApiController]
     [Route("/Orders")]
+    //[Authorize]
     public class OrderController : ControllerBase
     {
         private readonly IOrderService _orderService;
@@ -20,13 +22,11 @@ namespace StoreLineAPI.Controllers
         {
             try
             {
-                var result = await _orderService.CreateOrderAsync(model);
-                return Ok(result);
+                return Ok(await _orderService.CreateOrderAsync(model));
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"{ex.Message}");
-                throw;
+                return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
 
@@ -35,8 +35,7 @@ namespace StoreLineAPI.Controllers
         {
             try
             {
-                var orders = await _orderService.GetOrdersByUserIdAsync(userId);
-                return Ok(orders);
+                return Ok(await _orderService.GetOrdersByUserIdAsync(userId));
             }
             catch (Exception ex)
             {
@@ -49,8 +48,7 @@ namespace StoreLineAPI.Controllers
         {
             try
             {
-                var orders = await _orderService.CancelOrderAsync(orderId, userId);
-                return Ok(orders);
+                return Ok(await _orderService.CancelOrderAsync(orderId, userId));
             }
             catch (Exception ex)
             {

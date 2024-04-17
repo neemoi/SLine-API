@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace StoreLineAPI.Controllers
 {
     [ApiController]
-    [Route("api/Authorization")]
+    [Route("/Authorization")]
     public class AuthorizationController : Controller
     {
         private readonly IAccountService _accountService;
@@ -16,7 +16,7 @@ namespace StoreLineAPI.Controllers
             _accountService = accountService;
         }
 
-        [HttpPost("/Login")]
+        [HttpPost("Login")]
         [AllowAnonymous]
         public async Task<IActionResult> Login([FromBody] LoginDto model)
         {
@@ -26,11 +26,11 @@ namespace StoreLineAPI.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(new { message = ex.Message });
+                return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
 
-        [HttpPost("/Register")]
+        [HttpPost("Register")]
         [AllowAnonymous]
         public async Task<IActionResult> RegisterAsync([FromBody] RegisterDto model)
         {
@@ -40,11 +40,11 @@ namespace StoreLineAPI.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(new { message = ex.Message });
+                return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
 
-        [HttpPost("/Logout")]
+        [HttpPost("Logout")]
         [AllowAnonymous]
         public async Task<IActionResult> LogoutAsync()
         {
@@ -54,7 +54,7 @@ namespace StoreLineAPI.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(new { message = ex.Message });
+                return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
     }

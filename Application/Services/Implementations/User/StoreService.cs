@@ -26,8 +26,7 @@ namespace Application.Services.Implementations.User
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"{ex.Message}");
-                throw;
+                throw new Exception($"Error in StoreService -> GetAllChainsAsync: {ex.Message}");
             }
         }
 
@@ -41,8 +40,7 @@ namespace Application.Services.Implementations.User
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"{ex.Message}");
-                throw;
+                throw new Exception($"Error in StoreService -> GetAllStoresAsync: {ex.Message}");
             }
         }
     }

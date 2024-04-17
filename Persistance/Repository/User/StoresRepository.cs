@@ -30,8 +30,7 @@ namespace Persistance.Repository.User
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"{ex.Message}");
-                throw;
+                throw new Exception($"Error in StoresRepository -> GetAllChainsAsync: {ex.Message}");
             }
         }
 
@@ -54,8 +53,7 @@ namespace Persistance.Repository.User
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"{ex.Message}");
-                throw; 
+                throw new Exception($"Error in StoresRepository -> GetAllStoresAsync: {ex.Message}");
             }
         }
     }

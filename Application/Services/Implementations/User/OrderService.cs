@@ -27,7 +27,7 @@ namespace Application.Services.Implementations.User
             }
             catch (Exception ex)
             {
-                throw new Exception($"Error in Service -> CancelOrderAsync: {ex.Message}");
+                throw new Exception($"Error in OrderService -> CancelOrderAsync: {ex.Message}");
             }
         }
 
@@ -41,7 +41,7 @@ namespace Application.Services.Implementations.User
             }
             catch (Exception ex)
             {
-                throw new Exception($"Error in Service -> CreateOrderAsync: {ex.Message}");
+                throw new Exception($"Error in OrderService -> CreateOrderAsync: {ex.Message}");
             }
         }
 
@@ -55,7 +55,7 @@ namespace Application.Services.Implementations.User
             }
             catch (Exception ex)
             {
-                throw new Exception($"Error in Service -> GetOrdersByUserIdAsync: {ex.Message}");
+                throw new Exception($"Error in OrderService -> GetOrdersByUserIdAsync: {ex.Message}");
             }
         }
     }

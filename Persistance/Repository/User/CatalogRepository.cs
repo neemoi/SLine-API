@@ -30,8 +30,7 @@ namespace Persistance.Repository.User
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"{ex.Message}");
-                throw;
+                throw new Exception($"Error in CatalogRepository -> GetAllProductsAsync: {ex.Message}");
             };
         }
 
@@ -54,8 +53,7 @@ namespace Persistance.Repository.User
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"{ex.Message}");
-                throw;
+                throw new Exception($"Error in CatalogRepository -> GetCategoriesAsync: {ex.Message}");
             };
         }
 
@@ -76,8 +74,7 @@ namespace Persistance.Repository.User
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"{ex.Message}");
-                throw;
+                throw new Exception($"Error in CatalogRepository -> GetProductsByIdAsync: {ex.Message}");
             }
         }
 
@@ -100,8 +97,7 @@ namespace Persistance.Repository.User
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"{ex.Message}");
-                throw;
+                throw new Exception($"Error in CatalogRepository -> GetProductsByNameAsync: {ex.Message}");
             }
         }
 
@@ -124,8 +120,7 @@ namespace Persistance.Repository.User
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"{ex.Message}");
-                throw;
+                throw new Exception($"Error in CatalogRepository -> GetProductsBySubcategoryIdAsync: {ex.Message}");
             }
         }
 
@@ -148,8 +143,7 @@ namespace Persistance.Repository.User
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"{ex.Message}");
-                throw;
+                throw new Exception($"Error in CatalogRepository -> GetSubcategoriesByIdAsync: {ex.Message}");
             }
         }
     }

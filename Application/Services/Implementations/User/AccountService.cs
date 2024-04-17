@@ -29,67 +29,94 @@ namespace Application.Services.Implementations.User
 
         public async Task<LoginResponseDto> LoginAsync(LoginDto model)
         {
-            var user = await _userManager.FindByEmailAsync(model.Email);
-            if (user == null)
+            try
             {
-                throw new Exception($"Email {model.Email} not found");
-            }
+                var user = await _userManager.FindByEmailAsync(model.Email);
 
-            var result = await _signInManager.PasswordSignInAsync(user, model.Password, false, false);
-            if (!result.Succeeded)
+                if (user == null)
+                {
+                    throw new Exception($"Email {model.Email} not found");
+                }
+
+                var result = await _signInManager.PasswordSignInAsync(user, model.Password, false, false);
+
+                if (!result.Succeeded)
+                {
+                    throw new Exception("Invalid password");
+                }
+
+                var token = await _jwtService.GenerateTokenAsync(user);
+
+                var loginResponse = _mapper.Map<LoginResponseDto>(user);
+                loginResponse.Token = token;
+
+                return loginResponse;
+            }
+            catch (Exception ex)
             {
-                throw new Exception("Invalid password");
+                throw new Exception($"Error in AccountService -> LoginAsync: {ex.Message}");
             }
-
-            var token = await _jwtService.GenerateTokenAsync(user);
-
-            var loginResponse = _mapper.Map<LoginResponseDto>(user);
-            loginResponse.Token = token;
-
-            return loginResponse;
         }
 
         public async Task<RegisterResponseDto> RegisterAsync(RegisterDto model)
         {
-            var user = _mapper.Map<Users>(model);
-
-            var emailAlreadyExists = await _userManager.FindByEmailAsync(model.Email);
-            if(emailAlreadyExists != null)
+            try
             {
-                throw new Exception($"User with this {model.Email} email already exists");
-            }
+                var user = _mapper.Map<Users>(model);
 
-            if (!await _roleManager.RoleExistsAsync("User"))
+                var emailAlreadyExists = await _userManager.FindByEmailAsync(model.Email);
+
+                if (emailAlreadyExists != null)
+                {
+                    throw new Exception($"User with this {model.Email} email already exists");
+                }
+
+                if (!await _roleManager.RoleExistsAsync("User"))
+                {
+                    var role = new IdentityRole("User");
+
+                    await _roleManager.CreateAsync(role);
+                }
+
+                var result = await _userManager.CreateAsync(user, model.Password);
+
+                if (!result.Succeeded || user == null)
+                {
+                    var errors = string.Join(", ", result.Errors.Select(e => e.Description));
+                    throw new Exception($"Error creating account: {errors}");
+                }
+
+                await _userManager.AddToRoleAsync(user, "User");
+
+                await _signInManager.SignInAsync(user, true);
+
+                var token = await _jwtService.GenerateTokenAsync(user);
+
+                var registerResponse = _mapper.Map<RegisterResponseDto>(user);
+                registerResponse.Token = token;
+
+                return registerResponse;
+            }
+            catch (Exception ex)
             {
-                var role = new IdentityRole("User");
-                await _roleManager.CreateAsync(role);
+                throw new Exception($"Error in AccountService -> RegisterAsync: {ex.Message}");
             }
-
-            var result = await _userManager.CreateAsync(user, model.Password);
-            if (!result.Succeeded || user == null)
-            {
-                var errors = string.Join(", ", result.Errors.Select(e => e.Description));
-                throw new Exception($"Error creating account: {errors}");
-            }
-
-            await _userManager.AddToRoleAsync(user, "User");
-            await _signInManager.SignInAsync(user, true);
-
-            var token = await _jwtService.GenerateTokenAsync(user);
-
-            var registerResponse = _mapper.Map<RegisterResponseDto>(user);
-            registerResponse.Token = token;
-
-            return registerResponse;
         }
 
         public async Task<LogoutResponseDto> LogoutAsync(HttpContext httpContext)
         {
-            var user = await _userManager.GetUserAsync(httpContext.User);
+            try
+            {
+                var user = await _userManager.GetUserAsync(httpContext.User);
 
-            await _signInManager.SignOutAsync();
+                await _signInManager.SignOutAsync();
 
-            return _mapper.Map<LogoutResponseDto>(user);
+                return _mapper.Map<LogoutResponseDto>(user);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error in AccountService -> LogoutAsync: {ex.Message}");
+            }
         }
     }
 }

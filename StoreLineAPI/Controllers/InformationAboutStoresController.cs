@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace StoreLineAPI.Controllers
 {
     [ApiController]
-    [Route("api/Store")]
+    [Route("/Store")]
     //[Authorize]
     public class InformationAboutStoresController : ControllerBase
     {
@@ -16,7 +16,7 @@ namespace StoreLineAPI.Controllers
             _storeService = storeService;
         }
 
-        [HttpGet("/Stores")]
+        [HttpGet("AllStores")]
         public async Task<IActionResult> GetAllStores()
         {
             try
@@ -25,12 +25,12 @@ namespace StoreLineAPI.Controllers
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"{ex.Message}");
-                throw;
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+
             }
         }
 
-        [HttpGet("/Chains")]
+        [HttpGet("Chains")]
         public async Task<IActionResult> GetAllChains()
         {
             try
@@ -39,8 +39,7 @@ namespace StoreLineAPI.Controllers
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"{ex.Message}");
-                throw;
+                return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
     }

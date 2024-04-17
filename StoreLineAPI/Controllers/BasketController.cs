@@ -1,11 +1,13 @@
 ﻿using Application.DtoModels.Models.User.Cart;
 using Application.Services.Interfaces.IServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace StoreLineAPI.Controllers
 {
     [ApiController]
-    [Route("Basket")]
+    [Route("/Basket")]
+    //[Authorize]
     public class BasketController : ControllerBase
     {
         private readonly IBasketService _basketService;
@@ -15,13 +17,12 @@ namespace StoreLineAPI.Controllers
             _basketService = basketService;
         }
 
-        [HttpPost("/AddProduct")]
+        [HttpPost("AddProduct")]
         public async Task<IActionResult> AddProductToBasketAsync(BasketDto model)
         {
             try
             {
-                var result = await _basketService.AddProductToBasketAsync(model);
-                return Ok(result);
+                return Ok(await _basketService.AddProductToBasketAsync(model));
             }
             catch (Exception ex)
             {
@@ -29,13 +30,12 @@ namespace StoreLineAPI.Controllers
             }
         }
 
-        [HttpPut("/UpdateQuantity")]
+        [HttpPut("UpdateQuantity")]
         public async Task<IActionResult> UpdateBasketItemQuantityAsync(UpdateBasketItemDto model)
         {
             try
             {
-                var result = await _basketService.UpdateBasketItemQuantityAsync(model);
-                return Ok(result);
+                return Ok(await _basketService.UpdateBasketItemQuantityAsync(model));
             }
             catch (Exception ex)
             {
@@ -43,13 +43,12 @@ namespace StoreLineAPI.Controllers
             }
         }
 
-        [HttpGet("/BasketItems")]
+        [HttpGet("BasketItems")]
         public async Task<IActionResult> GetBasketItemsAsync(string userId)
         {
             try
             {
-                var result = await _basketService.GetBasketItemsAsync(userId);
-                return Ok(result);
+                return Ok(await _basketService.GetBasketItemsAsync(userId));
             }
             catch (Exception ex)
             {
@@ -57,13 +56,12 @@ namespace StoreLineAPI.Controllers
             }
         }
 
-        [HttpGet("/AvailableStores/{productId}")]
+        [HttpGet("AvailableStores/{productId}")]
         public async Task<IActionResult> GetProductsAvailableStores(int productId)
         {
             try
             {
-                var result = await _basketService.GetProductsAvailableStores(productId);
-                return Ok(result);
+                return Ok(await _basketService.GetProductsAvailableStores(productId));
             }
             catch (Exception ex)
             {
@@ -71,13 +69,12 @@ namespace StoreLineAPI.Controllers
             }
         }
 
-        [HttpDelete("/RemoveProduct")]
+        [HttpDelete("RemoveProduct")]
         public async Task<IActionResult> RemoveProductBasketAsync(DeleteBasketProductDto model)
         {
             try
             {
-                var result = await _basketService.RemoveProductBasketAsync(model);
-                return Ok(result);
+                return Ok(await _basketService.RemoveProductBasketAsync(model));
             }
             catch (Exception ex)
             {
@@ -85,13 +82,12 @@ namespace StoreLineAPI.Controllers
             }
         }
 
-        [HttpDelete("/RemoveBasket/{userId}")]
+        [HttpDelete("RemoveBasket/{userId}")]
         public async Task<IActionResult> RemoveAllUserBasketAsync(string userId)
         {
             try
             {
-                var result = await _basketService.RemoveAllUserBasketAsync(userId);
-                return Ok(result);
+                return Ok(await _basketService.RemoveAllUserBasketAsync(userId));
             }
             catch (Exception ex)
             {

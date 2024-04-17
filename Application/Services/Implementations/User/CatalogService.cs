@@ -26,8 +26,7 @@ namespace Application.Services.Implementations.User
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"{ex.Message}");
-                throw;
+                throw new Exception($"Error in CatalogService -> GetAllProductsAsync: {ex.Message}");
             }
         }
 
@@ -41,8 +40,7 @@ namespace Application.Services.Implementations.User
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"{ex.Message}");
-                throw;
+                throw new Exception($"Error in CatalogService -> GetCategoriesAsync: {ex.Message}");
             }
         }
 
@@ -56,8 +54,7 @@ namespace Application.Services.Implementations.User
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"{ex.Message}");
-                throw;
+                throw new Exception($"Error in CatalogService -> GetProductsByIdAsync: {ex.Message}");
             }
         }
 
@@ -71,8 +68,7 @@ namespace Application.Services.Implementations.User
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"{ex.Message}");
-                throw;
+                throw new Exception($"Error in CatalogService -> GetProductsByNameAsync: {ex.Message}");
             }
         }
 
@@ -86,8 +82,7 @@ namespace Application.Services.Implementations.User
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"{ex.Message}");
-                throw;
+                throw new Exception($"Error in CatalogService -> GetProductsBySubcategoryIdAsync: {ex.Message}");
             }
         }
 
@@ -101,8 +96,7 @@ namespace Application.Services.Implementations.User
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"{ex.Message}");
-                throw;
+                throw new Exception($"Error in CatalogService -> GetSubcategoriesByIdAsync: {ex.Message}");
             }
         }
     }

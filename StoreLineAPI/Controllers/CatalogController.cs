@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace StoreLineAPI.Controllers
 {
     [ApiController]
-    [Route("api/Catalog")]
+    [Route("/Catalog")]
     //[Authorize]
     public class CatalogController : ControllerBase
     {
@@ -16,7 +16,7 @@ namespace StoreLineAPI.Controllers
             _catalogService = catalogService;
         }
 
-        [HttpGet("/Categories")]
+        [HttpGet("Categories")]
         public async Task<IActionResult> GetCategories()
         {
             try
@@ -25,12 +25,11 @@ namespace StoreLineAPI.Controllers
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"{ex.Message}");
-                throw;
+                return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
 
-        [HttpGet("/Categories/{categoryId}")]
+        [HttpGet("Categories/{categoryId}")]
         public async Task<IActionResult> GetSubcategoriesByCategoryId(int categoryId)
         {
             try
@@ -39,12 +38,11 @@ namespace StoreLineAPI.Controllers
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"{ex.Message}");
-                throw;
+                return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
 
-        [HttpGet("/Subcategories/{subcategoryId}")]
+        [HttpGet("Subcategories/{subcategoryId}")]
         public async Task<IActionResult> GetProductsBySubcategoryId(int subcategoryId)
         {
             try
@@ -53,12 +51,11 @@ namespace StoreLineAPI.Controllers
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"{ex.Message}");
-                throw;
+                return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
 
-        [HttpGet("/Products")]
+        [HttpGet("Products")]
         public async Task<IActionResult> GetAllProducts()
         {
             try
@@ -67,12 +64,11 @@ namespace StoreLineAPI.Controllers
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"{ex.Message}");
-                throw;
+                return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
 
-        [HttpGet("/Products/{productName}")]
+        [HttpGet("Products/{productName}")]
         public async Task<IActionResult> GetProductByNameAsync(string productName)
         {
             try
@@ -81,12 +77,11 @@ namespace StoreLineAPI.Controllers
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"{ex.Message}");
-                throw;
+                return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
 
-        [HttpGet("/Product/{productId}")]
+        [HttpGet("Product/{productId}")]
         public async Task<IActionResult> GetProductsByIdAsync(int productId)
         {
             try
@@ -95,8 +90,7 @@ namespace StoreLineAPI.Controllers
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"{ex.Message}");
-                throw;
+                return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
     }

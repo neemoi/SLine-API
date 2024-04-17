@@ -3,7 +3,6 @@ using Application.DtoModels.Response.User;
 using Application.Services.Interfaces.IServices;
 using Application.UnitOfWork;
 using AutoMapper;
-using Persistance;
 
 namespace Application.Services.Implementations.User
 {
@@ -28,8 +27,7 @@ namespace Application.Services.Implementations.User
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error in Service -> AddProductToBasketAsync: {ex.Message}");
-                throw;
+                throw new Exception($"Error in BasketService -> AddProductToBasketAsync: {ex.Message}");
             }
         }
 
@@ -43,8 +41,7 @@ namespace Application.Services.Implementations.User
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error in Service -> GetBasketItemsAsync: {ex.Message}");
-                throw;
+                throw new Exception($"Error in BasketService -> GetBasketItemsAsync: {ex.Message}");
             }
         }
 
@@ -69,8 +66,7 @@ namespace Application.Services.Implementations.User
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error in Service -> GetProductsAvailableStores: {ex.Message}");
-                throw;
+                throw new Exception($"Error in BasketService -> GetProductsAvailableStores: {ex.Message}");
             }
         }
 
@@ -84,8 +80,7 @@ namespace Application.Services.Implementations.User
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error in Service -> RemoveProductByIdBasketAsync: {ex.Message}");
-                throw;
+                throw new Exception($"Error in BasketService -> RemoveProductBasketAsync: {ex.Message}");
             }
         }
 
@@ -99,8 +94,7 @@ namespace Application.Services.Implementations.User
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error in Service -> RemoveUserBasketAsync: {ex.Message}");
-                throw;
+                throw new Exception($"Error in BasketService -> RemoveAllUserBasketAsync: {ex.Message}");
             }
         }
 
@@ -114,7 +108,7 @@ namespace Application.Services.Implementations.User
             }
             catch (Exception ex)
             {
-                throw new Exception($"Error in Service -> UpdateBasketItemQuantityAsync: {ex.Message}");
+                throw new Exception($"Error in BasketService -> UpdateBasketItemQuantityAsync: {ex.Message}");
             }
         }
     }

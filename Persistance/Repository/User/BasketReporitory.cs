@@ -88,8 +88,7 @@ namespace Persistance.Repository.User
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error in Repository -> AddProductToBasketAsync: {ex.Message}");
-                throw;
+                throw new Exception($"Error in BasketReporitory -> AddProductToBasketAsync: {ex.Message}");
             }
         }
 
@@ -104,9 +103,9 @@ namespace Persistance.Repository.User
                     ?? throw new Exception($"User by id ({userId}) not found");
 
                 var result = await _storeLineContext.UserCarts
-                 .Where(c => c.UserId == userId)
-                 .Include(p => p.Product)
-                 .ToListAsync();
+                     .Where(c => c.UserId == userId)
+                     .Include(p => p.Product)
+                     .ToListAsync();
 
                 if (result != null)
                 {
@@ -119,8 +118,7 @@ namespace Persistance.Repository.User
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error in Repository -> GetBasketItemsAsync: {ex.Message}");
-                throw;
+                throw new Exception($"Error in BasketReporitory -> GetBasketItemsAsync: {ex.Message}");
             };
         }
 
@@ -151,8 +149,7 @@ namespace Persistance.Repository.User
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error in Repository -> GetProductsAvailableStores: {ex.Message}");
-                throw;
+                throw new Exception($"Error in BasketReporitory -> GetProductsAvailableStores: {ex.Message}");
             }
         }
 
@@ -192,8 +189,7 @@ namespace Persistance.Repository.User
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error in Repository -> RemoveProductByIdBasketAsync: {ex.Message}");
-                throw;
+                throw new Exception($"Error in BasketReporitory -> RemoveProductBasketAsync: {ex.Message}");
             }
         }
 
@@ -225,8 +221,7 @@ namespace Persistance.Repository.User
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error in Repository -> RemoveUserBasketAsync: {ex.Message}");
-                throw;
+                throw new Exception($"Error in BasketReporitory -> RemoveAllUserBasketAsync: {ex.Message}");
             }
         }
 
@@ -259,8 +254,7 @@ namespace Persistance.Repository.User
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error in Repository -> UpdateBasketItemQuantityAsync: {ex.Message}");
-                throw;
+                throw new Exception($"Error in BasketReporitory -> UpdateBasketItemQuantityAsync: {ex.Message}");
             }
         }
 
