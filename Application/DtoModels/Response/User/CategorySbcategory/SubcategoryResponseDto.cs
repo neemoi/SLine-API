@@ -8,6 +8,8 @@ namespace Application.DtoModels.Response.User.CategorySbcategory
 
         public string? SubcategoryName { get; set; }
 
+        public string? SubcategoryImage { get; set; }
+
         public int CategoryId { get; set; }
 
         public List<ProductDto>? Products { get; set; }

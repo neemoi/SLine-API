@@ -6,6 +6,8 @@
 
         public string? CategoryName { get; set; }
 
+        public string? CategoryImage { get; set; }
+
         public List<SubcategoryDto>? Subcategories { get; set; }
     }
 }

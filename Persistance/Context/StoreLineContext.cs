@@ -80,6 +80,7 @@ public partial class StoreLineContext : IdentityDbContext<Users>
             entity.Property(e => e.CategoryName)
                 .HasMaxLength(255)
                 .HasColumnName("category_name");
+            entity.Property(e => e.CategoryImage).HasColumnName("category_image");
         });
 
         modelBuilder.Entity<ChainOfStore>(entity =>
@@ -156,11 +157,6 @@ public partial class StoreLineContext : IdentityDbContext<Users>
             entity.HasOne(d => d.Payment).WithMany(p => p.Orders)
                .HasForeignKey(d => d.PaymentId)
                .HasConstraintName("orders_payments_id_fkey");
-
-            //entity.HasOne(o => o.Payment)
-            //    .WithOne(p => p.Order)
-            //    .HasForeignKey<Order>(o => o.PaymentId)
-            //    .HasConstraintName("fk_order_payment_id");
         });
 
         modelBuilder.Entity<OrderItem>(entity =>
@@ -281,6 +277,7 @@ public partial class StoreLineContext : IdentityDbContext<Users>
             entity.Property(e => e.SubcategoryName)
                 .HasMaxLength(255)
                 .HasColumnName("subcategory_name");
+            entity.Property(e => e.SubcategoryImage).HasColumnName("subcategory_image");
 
             entity.HasOne(d => d.Category).WithMany(p => p.Subcategories)
                 .HasForeignKey(d => d.CategoryId)

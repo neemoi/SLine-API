@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Persistance.Context;
@@ -11,9 +12,11 @@ using Persistance.Context;
 namespace Persistance.Migrations
 {
     [DbContext(typeof(StoreLineContext))]
-    partial class StoreLineContextModelSnapshot : ModelSnapshot
+    [Migration("20240418164042_AddPropertyToCategory")]
+    partial class AddPropertyToCategory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -169,8 +172,8 @@ namespace Persistance.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("CategoryId"));
 
-                    b.Property<string>("CategoryImage")
-                        .HasColumnType("text")
+                    b.Property<byte[]>("CategoryImage")
+                        .HasColumnType("bytea")
                         .HasColumnName("category_image");
 
                     b.Property<string>("CategoryName")
@@ -470,10 +473,6 @@ namespace Persistance.Migrations
                     b.Property<int?>("CategoryId")
                         .HasColumnType("integer")
                         .HasColumnName("category_id");
-
-                    b.Property<string>("SubcategoryImage")
-                        .HasColumnType("text")
-                        .HasColumnName("subcategory_image");
 
                     b.Property<string>("SubcategoryName")
                         .HasMaxLength(255)

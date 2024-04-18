@@ -6,6 +6,8 @@ public partial class Subcategory
 
     public string? SubcategoryName { get; set; }
 
+    public string? SubcategoryImage { get; set; }
+
     public int? CategoryId { get; set; }
 
     public virtual Category? Category { get; set; }

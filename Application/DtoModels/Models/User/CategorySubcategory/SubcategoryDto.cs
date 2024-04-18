@@ -5,5 +5,7 @@
         public int SubcategoryId { get; set; }
 
         public string? SubcategoryName { get; set; }
+
+        public string? CategoryImage { get; set; }
     }
 }
