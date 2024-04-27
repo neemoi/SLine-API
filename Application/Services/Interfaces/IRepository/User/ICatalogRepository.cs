@@ -1,4 +1,5 @@
-﻿using Persistance;
+﻿using Application.DtoModels.Models.User.Product;
+using Persistance;
 
 namespace Application.Services.Interfaces.IRepository.User
 {
@@ -9,6 +10,8 @@ namespace Application.Services.Interfaces.IRepository.User
         Task<List<Subcategory>> GetSubcategoriesByIdAsync(int categoryId);
 
         Task<List<Product>> GetProductsBySubcategoryIdAsync(int subcategoryId);
+
+        Task<PriceRangeDto> GetPriceRangeByProductIdAsync(int productId);
 
         Task<List<Product>> GetProductsByNameAsync(string productName);
 

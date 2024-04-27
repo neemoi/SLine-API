@@ -1,6 +1,7 @@
 ﻿using Application.Services.Interfaces.IServices.User;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Persistance;
 
 namespace StoreLineAPI.Controllers
 {
@@ -22,6 +23,19 @@ namespace StoreLineAPI.Controllers
             try
             {
                 return Ok(await _catalogService.GetCategoriesAsync());
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
+        [HttpGet("Warehouse/{productId}")]
+        public async Task<IActionResult> GetPriceRangeByProductIdAsync(int productId)
+        {
+            try
+            {
+                return Ok(await _catalogService.GetPriceRangeByProductIdAsync(productId));
             }
             catch (Exception ex)
             {

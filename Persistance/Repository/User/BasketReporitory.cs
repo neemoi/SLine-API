@@ -32,6 +32,19 @@ namespace Persistance.Repository.User
                 var user = await _storeLineContext.Users.FirstOrDefaultAsync(u => u.Id == model.UserId)
                     ?? throw new Exception($"User ({model.UserId}) not found");
 
+                if (string.IsNullOrEmpty(user.Address))
+                {
+                    throw new Exception($"User ({model.UserId}) does not have a delivery address set");
+                }
+
+                var warehouse = product.Warehouses.FirstOrDefault(w => w.StoreId == model.StoreId)
+                    ?? throw new Exception($"Warehouse not found for store ID {model.StoreId}");
+                
+                if (warehouse.Quantity < model.Quantity)
+                {
+                    throw new Exception($"Insufficient quantity for product ID {model.ProductId} in store ID {model.StoreId}. Requested: {model.Quantity}, Available: {warehouse.Quantity}");
+                }
+
                 var existingCartItem = await _storeLineContext.UserCarts
                     .FirstOrDefaultAsync(c => c.UserId == model.UserId && c.ProductId == model.ProductId && c.StoreId == model.StoreId);
 

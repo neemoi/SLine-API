@@ -46,9 +46,15 @@ namespace Application.Services.Implementations.User
                 }
 
                 var token = await _jwtService.GenerateTokenAsync(user);
+                var address = user.Address;
+
+                var userRoles = await _userManager.GetRolesAsync(user);
+                var role = userRoles.FirstOrDefault();
 
                 var loginResponse = _mapper.Map<LoginResponseDto>(user);
                 loginResponse.Token = token;
+                loginResponse.Role = role;
+                loginResponse.Address = address;
 
                 return loginResponse;
             }
@@ -89,11 +95,13 @@ namespace Application.Services.Implementations.User
                 await _userManager.AddToRoleAsync(user, "User");
 
                 await _signInManager.SignInAsync(user, true);
-
+                
                 var token = await _jwtService.GenerateTokenAsync(user);
+                var address = user.Address;
 
                 var registerResponse = _mapper.Map<RegisterResponseDto>(user);
                 registerResponse.Token = token;
+                registerResponse.Address = address;
 
                 return registerResponse;
             }

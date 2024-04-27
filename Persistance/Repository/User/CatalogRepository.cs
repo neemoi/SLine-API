@@ -1,4 +1,6 @@
-﻿using Application.Services.Interfaces.IRepository.User;
+﻿using Application.DtoModels.Models.User.Product;
+using Application.Services.Interfaces.IRepository.User;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Persistance.Context;
 
@@ -7,10 +9,12 @@ namespace Persistance.Repository.User
     public class CatalogRepository : ICatalogRepository
     {
         private readonly StoreLineContext _storeLineContext;
+        private readonly IMapper _mapper;
 
-        public CatalogRepository(StoreLineContext storeLineContext)
+        public CatalogRepository(StoreLineContext storeLineContext, IMapper mapper)
         {
             _storeLineContext = storeLineContext;
+            _mapper = mapper;
         }
 
         public async Task<List<Product>> GetAllProductsAsync()
@@ -55,6 +59,37 @@ namespace Persistance.Repository.User
             {
                 throw new Exception($"Error in CatalogRepository -> GetCategoriesAsync: {ex.Message}");
             };
+        }
+
+        public async Task<PriceRangeDto> GetPriceRangeByProductIdAsync(int productId)
+        {
+            try
+            {
+                var data = await _storeLineContext.Warehouses
+                    .Where(w => w.ProductId == productId && w.ProductPrice.HasValue)
+                    .GroupBy(w => w.ProductId)
+                    .Select(g => new PriceRangeDto
+                    {
+                        MinPrice = g.Min(w => w.ProductPrice) ?? 0,
+                        MaxPrice = g.Max(w => w.ProductPrice) ?? 0,
+                        MinQuantity = g.Min(w => w.Quantity) ?? 0,
+                        MaxQuantity = g.Max(w => w.Quantity) ?? 0
+                    })
+                    .FirstOrDefaultAsync();
+
+                if (data != null)
+                {
+                    return data;
+                }
+                else
+                {
+                    throw new Exception($"No data found for product with ID {productId}.");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error in CatalogRepository -> GetPriceRangeByProductIdAsync: {ex.Message}");
+            }
         }
 
         public async Task<Product> GetProductsByIdAsync(int productId)
@@ -106,6 +141,7 @@ namespace Persistance.Repository.User
             try
             {
                 var products = await _storeLineContext.Products
+                    .Include(c => c.Subcategory)
                     .Where(p => p.SubcategoryId == subcategoryId)
                     .ToListAsync();
 

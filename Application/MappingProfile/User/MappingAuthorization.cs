@@ -6,13 +6,15 @@ using Persistance;
 namespace Application.MappingProfile.User
 {
     public class MappingAuthorization : Profile
-    { 
+    {
         public MappingAuthorization()
         {
             CreateMap<RegisterDto, Users>();
-            CreateMap<Users, LoginResponseDto>();
+            CreateMap<Users, LoginResponseDto>()
+                .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.Address)); 
             CreateMap<Users, RegisterResponseDto>()
-               .ForMember(dest => dest.Token, opt => opt.MapFrom((src, dest, token) => token));
+                .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.Address))
+                .ForMember(dest => dest.Token, opt => opt.MapFrom((src, dest, token) => token));
             CreateMap<Users, LogoutResponseDto>();
         }
     }

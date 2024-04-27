@@ -11,6 +11,8 @@ namespace Application.Services.Interfaces.IServices.User
 
         Task<List<ProductResponseDto>> GetProductsBySubcategoryIdAsync(int subcategoryId);
 
+        Task<PriceRangeResponseDto> GetPriceRangeByProductIdAsync(int productId);
+
         Task<List<ProductResponseDto>> GetProductsByNameAsync(string productName);
 
         Task<ProductResponseDto> GetProductsByIdAsync(int productId);

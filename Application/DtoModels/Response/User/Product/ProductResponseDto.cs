@@ -26,6 +26,8 @@
 
         public int SubcategoryId { get; set; }
 
+        public string? SubcategoryName { get; set; }
+
         public byte[]? Image { get; set; }
     }
 }

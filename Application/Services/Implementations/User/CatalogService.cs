@@ -45,6 +45,20 @@ namespace Application.Services.Implementations.User
             }
         }
 
+        public async Task<PriceRangeResponseDto> GetPriceRangeByProductIdAsync(int productId)
+        {
+            try
+            {
+                var result = await _unitOfWork.CatalogRepository.GetPriceRangeByProductIdAsync(productId);
+
+                return _mapper.Map<PriceRangeResponseDto>(result);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error in CatalogService -> GetPriceRangeByProductIdAsync: {ex.Message}");
+            }
+        }
+
         public async Task<ProductResponseDto> GetProductsByIdAsync(int productId)
         {
             try

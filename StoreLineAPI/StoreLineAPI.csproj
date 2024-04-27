@@ -33,4 +33,8 @@
     <ProjectReference Include="..\Persistance\Persistance.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="..\.dockerignore" Link="Controllers\.dockerignore" />
+  </ItemGroup>
+
 </Project>
