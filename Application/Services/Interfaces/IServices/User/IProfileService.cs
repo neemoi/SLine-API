@@ -7,6 +7,8 @@ namespace Application.Services.Interfaces.IServices.User
     {
         Task<ProfileResposneDto> EditProfileAsync(EditProfileDto model, string userId);
 
+        Task<ProfileResposneDto> SetAddres(string userId, string address);
+
         Task<ProfileResposneDto> GetAllInfoAsync(string userId);
     }
 }

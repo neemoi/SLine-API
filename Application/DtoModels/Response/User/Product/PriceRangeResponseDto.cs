@@ -2,6 +2,8 @@
 {
     public class PriceRangeResponseDto
     {
+        public int Quantity { get; set; }
+
         public decimal MinPrice { get; set; }
 
         public decimal MaxPrice { get; set; }

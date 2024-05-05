@@ -43,6 +43,19 @@ namespace StoreLineAPI.Controllers
             }
         }
 
+        [HttpGet("Warehouse/{storeId:int}/{productId:int}")]
+        public async Task<IActionResult> GetWarehouseDetails(int storeId, int productId)
+        {
+            try
+            {
+                return Ok(await _catalogService.GetWarehouseDetailsAsync(storeId, productId));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = $"Error in WarehouseController -> GetWarehouseDetails: {ex.Message}" });
+            }
+        }
+
         [HttpGet("Categories/{categoryId}")]
         public async Task<IActionResult> GetSubcategoriesByCategoryId(int categoryId)
         {

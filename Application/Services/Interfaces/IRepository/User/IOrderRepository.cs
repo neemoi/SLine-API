@@ -9,6 +9,12 @@ namespace Application.Services.Interfaces.IRepository.User
 
         Task<List<Order>> GetOrdersByUserIdAsync(string userId);
 
+        Task<List<DeliveryOptionDto>> GetDelivery(int storeId);
+
+        Task<List<OrderStatusDto>> GetOrderStatus();
+
+        Task<List<PaymentDto>> GetPaymentType();
+
         Task<Order> CancelOrderAsync(int orderId, string userId);
     }
 }

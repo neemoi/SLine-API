@@ -92,6 +92,22 @@ namespace Persistance.Repository.User
             }
         }
 
+        public async Task<Warehouse> GetWarehouseDetailsAsync(int storeId, int productId)
+        {
+            try
+            {
+                var data = await _storeLineContext.Warehouses
+                    .Where(w => w.StoreId == storeId && w.ProductId == productId)
+                    .FirstOrDefaultAsync();
+
+                return data;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error in CatalogRepository -> GetWarehouseDetailsAsync: {ex.Message}");
+            }
+        }
+
         public async Task<Product> GetProductsByIdAsync(int productId)
         {
             try

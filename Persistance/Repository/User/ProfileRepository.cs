@@ -58,6 +58,38 @@ namespace Persistance.Repository.User
             }
         }
 
+        public async Task<Users> SetAddres(string userId, string address)
+        {
+            try
+            {
+                var user = await _userManager.FindByIdAsync(userId);
+
+                if (user != null)
+                {
+                    _mapper.Map(address, user);
+
+                    var updateResult = await _userManager.UpdateAsync(user);
+
+                    if (updateResult.Succeeded)
+                    {
+                        return user;
+                    }
+                    else
+                    {
+                        throw new InvalidOperationException($"Error updating user address: {string.Join(", ", updateResult.Errors.Select(e => e.Description))}");
+                    }
+                }
+                else
+                {
+                    throw new ArgumentNullException($"User with id {userId} not found.");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error in ProfileRepository -> SetAddres: {ex.Message}");
+            }
+        }
+
         public async Task<Users> GetAllInfoAsync(string userId)
         {
             try

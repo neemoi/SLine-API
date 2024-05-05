@@ -31,6 +31,20 @@ namespace Application.Services.Implementations.User
                 throw new Exception($"Error in ProfileService -> EditProfileAsync: {ex.Message}");
             }
         }
+      
+        public async Task<ProfileResposneDto> SetAddres(string userId, string address)
+        {
+            try
+            {
+                var result = await _unitOfWork.ProfileRepository.SetAddres(userId, address);
+
+                return _mapper.Map<ProfileResposneDto>(result);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error in ProfileService -> SetAddres: {ex.Message}");
+            }
+        }
 
         public async Task<ProfileResposneDto> GetAllInfoAsync(string userId)
         {
@@ -45,5 +59,6 @@ namespace Application.Services.Implementations.User
                 throw new Exception($"Error in ProfileService -> GetAllInfoAsync: {ex.Message}");
             }
         }
+
     }
 }

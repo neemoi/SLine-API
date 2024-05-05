@@ -25,6 +25,12 @@ namespace Application.MappingProfile.User
             CreateMap<Warehouse, PriceRangeDto>();
 
             CreateMap<PriceRangeDto, PriceRangeResponseDto>();
+
+            CreateMap<Warehouse, WarehouseProductDto>()
+              .ForMember(dest => dest.StoreId, opt => opt.MapFrom(src => src.StoreId))
+              .ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => src.ProductId))
+              .ForMember(dest => dest.Quantity, opt => opt.MapFrom(src => src.Quantity))
+              .ForMember(dest => dest.ProductPrice, opt => opt.MapFrom(src => src.ProductPrice ?? 0));
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Application.DtoModels.Models.User.Order;
 using Application.Services.Interfaces.IRepository.User;
 using AutoMapper;
+using Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using Persistance.Context;
 
@@ -138,6 +139,57 @@ namespace Persistance.Repository.User
             catch (Exception ex)
             {
                 throw new Exception($"Error in OrderRepository -> GetOrdersByUserIdAsync: {ex.Message}");
+            }
+        }
+
+        public async Task<List<DeliveryOptionDto>> GetDelivery(int storeId)
+        {
+            try
+            {
+                var delivery = await _storeLineContext.DeliveryOptions
+               .Where(d => d.StoreId == storeId)
+               .ToListAsync()
+                ?? throw new Exception($"ID Store {storeId} not found.");
+
+                return _mapper.Map<List<DeliveryOptionDto>>(delivery);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error in OrderRepository -> GetDelivery: {ex.Message}");
+            }
+        }
+
+        public async Task<List<OrderStatusDto>> GetOrderStatus()
+        {
+            try
+            {
+                var orderStatus = await _storeLineContext.OrderStatuses
+                .ToListAsync()
+                ?? throw new Exception($"Statuses not found.");
+
+
+                return _mapper.Map<List<OrderStatusDto>>(orderStatus);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error in OrderRepository -> GetOrderStatus: {ex.Message}");
+            }
+        }
+
+        public async Task<List<PaymentDto>> GetPaymentType()
+        {
+            try
+            {
+                var payments = await _storeLineContext.Payments
+                .ToListAsync()
+                ?? throw new Exception($"Payments not found.");
+
+
+                return _mapper.Map<List<PaymentDto>>(payments);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error in OrderRepository -> GetOrderStatus: {ex.Message}");
             }
         }
 

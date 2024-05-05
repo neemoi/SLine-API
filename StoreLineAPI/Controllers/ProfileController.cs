@@ -32,6 +32,20 @@ namespace StoreLineAPI.Controllers
             }
         }
 
+
+        [HttpPut("SetAddres")]
+        public async Task<IActionResult> SetAddres(string userId, string address)
+        {
+            try
+            {
+                return Ok(await _profileService.SetAddres(userId, address));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
         [HttpPut("Edit")]
         public async Task<IActionResult> EditProfileAsync(EditProfileDto model, string userId)
         {

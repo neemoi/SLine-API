@@ -1,6 +1,6 @@
 ﻿namespace Application.DtoModels.Response.User.Basket
 {
-    public class UserBasketResponseDto
+    public class BasketResponseDto
     {
         public int CartId { get; set; }
 
@@ -19,5 +19,9 @@
         public decimal Price { get; set; }
 
         public int Quantity { get; set; }
+
+        public bool IsOrdered { get; set; }
+
+        public byte[]? Image { get; set; }
     }
 }

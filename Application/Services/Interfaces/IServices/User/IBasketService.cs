@@ -6,16 +6,16 @@ namespace Application.Services.Interfaces.IServices.User
 {
     public interface IBasketService
     {
-        Task<UserBasketResponseDto> AddProductToBasketAsync(BasketDto model);
+        Task<BasketResponseDto> AddProductToBasketAsync(BasketDto model);
 
-        Task<List<UserBasketResponseDto>> GetBasketItemsAsync(string userId);
+        Task<List<BasketResponseDto>> GetBasketItemsAsync(string userId);
 
         Task<List<GetProductsStoresResponseDto>> GetProductsAvailableStores(int productId);
 
-        Task<UserBasketResponseDto> UpdateBasketItemQuantityAsync(UpdateBasketItemDto model);
+        Task<BasketResponseDto> UpdateBasketItemQuantityAsync(UpdateBasketItemDto model);
 
-        Task<UserBasketResponseDto> RemoveProductBasketAsync(DeleteBasketProductDto model);
+        Task<BasketResponseDto> RemoveProductBasketAsync(DeleteBasketProductDto model);
 
-        Task<List<UserBasketResponseDto>> RemoveAllUserBasketAsync(string userId);
+        Task<List<BasketResponseDto>> RemoveAllUserBasketAsync(string userId);
     }
 }

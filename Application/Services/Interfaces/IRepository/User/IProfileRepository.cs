@@ -7,6 +7,8 @@ namespace Application.Services.Interfaces.IRepository.User
     {
         Task<Users> EditProfileAsync(EditProfileDto model, string userId);
 
+        Task<Users> SetAddres(string userId, string address);
+
         Task<Users> GetAllInfoAsync(string userId);
     }
 }

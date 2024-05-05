@@ -2,6 +2,8 @@
 {
     public class OrderResponseDto
     {
+        public int OrderId { get; set; }
+
         public string? StoreName { get; set; }
 
         public string? StoreCity { get; set; }

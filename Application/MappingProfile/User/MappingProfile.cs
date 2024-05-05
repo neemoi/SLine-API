@@ -11,6 +11,8 @@ namespace Application.MappingProfile.User
         {
             CreateMap<Users, ProfileResposneDto>();
             CreateMap<EditProfileDto, Users>();
+            CreateMap<string, Users>()
+                .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src));
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Application.DtoModels.Models.User.Order;
 using Application.DtoModels.Response.User.Order;
 using AutoMapper;
+using Domain.Models;
 using Persistance;
 
 namespace Application.MappingProfile.User
@@ -18,6 +19,7 @@ namespace Application.MappingProfile.User
                 .ForMember(dest => dest.TotalPrice, opt => opt.MapFrom(src => src.Price * src.Quantity))
                 .ForMember(dest => dest.Store, opt => opt.MapFrom(src => src.Store.StoreName));
             CreateMap<Order, OrderResponseDto>()
+                 .ForMember(dest => dest.OrderId, opt => opt.MapFrom(src => src.OrderId))
                  .ForMember(dest => dest.ProductName, opt => opt.MapFrom(src => src.OrderItems.FirstOrDefault().Product.ProductName))
                  .ForMember(dest => dest.ProductPrice, opt => opt.MapFrom(src => src.OrderItems.FirstOrDefault().ProductPrice))
                  .ForMember(dest => dest.TotalPrice, opt => opt.MapFrom(src => src.OrderItems.Sum(oi => oi.TotalPrice)))
@@ -35,6 +37,10 @@ namespace Application.MappingProfile.User
                  .ForMember(dest => dest.PaymentType, opt => opt.MapFrom(src => src.Payment.Type))
                  .ForMember(dest => dest.Commission, opt => opt.MapFrom(src => src.Payment.Commission))
                  .ForMember(dest => dest.StatusName, opt => opt.MapFrom(src => src.Status.StatusName));
+
+            CreateMap<DeliveryOption, DeliveryOptionDto>();
+            CreateMap<OrderStatus, OrderStatusDto>();
+            CreateMap<Payment, PaymentDto>();
         }
     }
 }

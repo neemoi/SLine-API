@@ -13,6 +13,8 @@ namespace Application.Services.Interfaces.IRepository.User
 
         Task<PriceRangeDto> GetPriceRangeByProductIdAsync(int productId);
 
+        Task<Warehouse> GetWarehouseDetailsAsync(int storeId, int productId);
+
         Task<List<Product>> GetProductsByNameAsync(string productName);
 
         Task<Product> GetProductsByIdAsync(int productId);

@@ -3,6 +3,7 @@ using Application.DtoModels.Response.User.Order;
 using Application.Services.Interfaces.IServices.User;
 using Application.UnitOfWork;
 using AutoMapper;
+using Persistance;
 
 namespace Application.Services.Implementations.User
 {
@@ -56,6 +57,48 @@ namespace Application.Services.Implementations.User
             catch (Exception ex)
             {
                 throw new Exception($"Error in OrderService -> GetOrdersByUserIdAsync: {ex.Message}");
+            }
+        }
+
+        public async Task<List<DeliveryOptionDto>> GetDelivery(int storeId)
+        {
+            try
+            {
+                var result = await _unitOfWork.OrderRepository.GetDelivery(storeId);
+
+                return _mapper.Map<List<DeliveryOptionDto>>(result);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error in OrderService -> GetAllDataDeliveryAndPaymentsAsync: {ex.Message}");
+            }
+        }
+
+        public async Task<List<OrderStatusDto>> GetOrderStatus()
+        {
+            try
+            {
+                var result = await _unitOfWork.OrderRepository.GetOrderStatus();
+
+                return _mapper.Map<List<OrderStatusDto>>(result);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error in OrderService -> GetOrderStatus: {ex.Message}");
+            }
+        }
+
+        public async Task<List<PaymentDto>> GetPaymentType()
+        {
+            try
+            {
+                var result = await _unitOfWork.OrderRepository.GetPaymentType();
+
+                return _mapper.Map<List<PaymentDto>>(result);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error in OrderService -> GetOrderStatus: {ex.Message}");
             }
         }
     }

@@ -18,13 +18,13 @@ namespace Application.Services.Implementations.User
             _mapper = mapper;
         }
 
-        public async Task<UserBasketResponseDto> AddProductToBasketAsync(BasketDto model)
+        public async Task<BasketResponseDto> AddProductToBasketAsync(BasketDto model)
         {
             try
             {
                 var result = await _unitOfWork.BasketRepository.AddProductToBasketAsync(model);
 
-                return _mapper.Map<UserBasketResponseDto>(result);
+                return _mapper.Map<BasketResponseDto>(result);
             }
             catch (Exception ex)
             {
@@ -32,13 +32,13 @@ namespace Application.Services.Implementations.User
             }
         }
 
-        public async Task<List<UserBasketResponseDto>> GetBasketItemsAsync(string userId)
+        public async Task<List<BasketResponseDto>> GetBasketItemsAsync(string userId)
         {
             try
             {
                 var result = await _unitOfWork.BasketRepository.GetBasketItemsAsync(userId);
 
-                return _mapper.Map<List<UserBasketResponseDto>>(result);
+                return _mapper.Map<List<BasketResponseDto>>(result);
             }
             catch (Exception ex)
             {
@@ -71,13 +71,13 @@ namespace Application.Services.Implementations.User
             }
         }
 
-        public async Task<UserBasketResponseDto> RemoveProductBasketAsync(DeleteBasketProductDto model)
+        public async Task<BasketResponseDto> RemoveProductBasketAsync(DeleteBasketProductDto model)
         {
             try
             {
                 var updatedCartItem = await _unitOfWork.BasketRepository.RemoveProductBasketAsync(model);
 
-                return _mapper.Map<UserBasketResponseDto>(updatedCartItem); ;
+                return _mapper.Map<BasketResponseDto>(updatedCartItem); ;
             }
             catch (Exception ex)
             {
@@ -85,13 +85,13 @@ namespace Application.Services.Implementations.User
             }
         }
 
-        public async Task<List<UserBasketResponseDto>> RemoveAllUserBasketAsync(string userId)
+        public async Task<List<BasketResponseDto>> RemoveAllUserBasketAsync(string userId)
         {
             try
             {
                 var updatedCartItem = await _unitOfWork.BasketRepository.RemoveAllUserBasketAsync(userId);
 
-                return _mapper.Map<List<UserBasketResponseDto>>(updatedCartItem); ;
+                return _mapper.Map<List<BasketResponseDto>>(updatedCartItem); ;
             }
             catch (Exception ex)
             {
@@ -99,13 +99,13 @@ namespace Application.Services.Implementations.User
             }
         }
 
-        public async Task<UserBasketResponseDto> UpdateBasketItemQuantityAsync(UpdateBasketItemDto model)
+        public async Task<BasketResponseDto> UpdateBasketItemQuantityAsync(UpdateBasketItemDto model)
         {
             try
             {
                 var  UpdateCartItemQuantity = await _unitOfWork.BasketRepository.UpdateBasketItemQuantityAsync(model);
 
-                return _mapper.Map<UserBasketResponseDto>(UpdateCartItemQuantity); ;
+                return _mapper.Map<BasketResponseDto>(UpdateCartItemQuantity); ;
             }
             catch (Exception ex)
             {
