@@ -1,4 +1,5 @@
-﻿using Application.Services.Interfaces.IRepository.User;
+﻿using Application.Services.Interfaces.IRepository.Admin;
+using Application.Services.Interfaces.IRepository.User;
 using Application.UnitOfWork;
 using Persistance.Context;
 
@@ -16,12 +17,14 @@ namespace Persistance.Repository
 
         public IProfileRepository ProfileRepository { get; }
 
+        public ICategoryRepository CategoryRepository { get; }
+
 
         private readonly StoreLineContext _storeLineContext;
 
         public UnitOfWork(StoreLineContext storeLineContext, IStoreRepository storeRepository, 
             ICatalogRepository catalogRepository, IBasketRepository basketRepository, IOrderRepository orderRepository, 
-            IProfileRepository profileRepository)
+            IProfileRepository profileRepository, ICategoryRepository categoryRepository)
         {
             _storeLineContext = storeLineContext;
             StoreRepository = storeRepository;
@@ -29,6 +32,7 @@ namespace Persistance.Repository
             BasketRepository = basketRepository;
             OrderRepository = orderRepository;
             ProfileRepository = profileRepository;
+            CategoryRepository = categoryRepository;
         }
 
         public async Task SaveChangesAsync()

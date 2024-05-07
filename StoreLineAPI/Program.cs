@@ -1,8 +1,12 @@
 using Application.MappingProfile.User;
+using Application.Services;
 using Application.Services.Implementations.User;
+using Application.Services.Interfaces;
+using Application.Services.Interfaces.IRepository.Admin;
 using Application.Services.Interfaces.IRepository.User;
 using Application.Services.Interfaces.IServices.User;
 using Application.UnitOfWork;
+using CategoryAPI.Mapping;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -84,7 +88,7 @@ internal class Program
         });
 
         builder.Services.AddAutoMapper(typeof(MappingAuthorization), typeof(MappingStore), typeof(MappingCatalog),
-            typeof(MappingBasket), typeof(MappingProfile));
+            typeof(MappingBasket), typeof(MappingProfile), typeof(MappingCategory));
 
         // Registering Scoped Services
         builder.Services.AddScoped(provider =>
@@ -104,6 +108,7 @@ internal class Program
         builder.Services.AddScoped<IBasketService, BasketService>();
         builder.Services.AddScoped<IOrderService, OrderService>();
         builder.Services.AddScoped<IProfileService, ProfileService>();
+        builder.Services.AddScoped<ICategoryService, CategoryService>();
 
         //Registering Scoped Repositories
         builder.Services.AddScoped<IStoreRepository, StoresRepository>();
@@ -111,6 +116,7 @@ internal class Program
         builder.Services.AddScoped<IBasketRepository, BasketReporitory>();
         builder.Services.AddScoped<IOrderRepository, OrderRepository>();
         builder.Services.AddScoped<IProfileRepository, ProfileRepository>();
+        builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 
         // Identity Configuration
         builder.Services.AddIdentity<Users, IdentityRole>()
