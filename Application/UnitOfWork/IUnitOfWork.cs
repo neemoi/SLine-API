@@ -17,6 +17,8 @@ namespace Application.UnitOfWork
 
         public ICategoryRepository CategoryRepository { get; }
 
+        public ISubCategoryRepository SubCategoryRepository { get; }
+
         Task SaveChangesAsync();
     }
 }

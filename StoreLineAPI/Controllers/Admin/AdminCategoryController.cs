@@ -14,7 +14,7 @@ public class AdminCategoryController : ControllerBase
     }
 
     [HttpGet("/GetAllCategories")]
-    public async Task<IActionResult> GetAllCategories()
+    public async Task<IActionResult> GetAllCategoriesAsync()
     {
         try
         {
@@ -28,7 +28,7 @@ public class AdminCategoryController : ControllerBase
     }
 
     [HttpPost("/AddCategory")]
-    public async Task<IActionResult> AddCategory([FromBody] CategoryDTO categoryDto)
+    public async Task<IActionResult> AddCategoryAsync([FromBody] CategoryDTO categoryDto)
     {
         try
         {
@@ -42,7 +42,7 @@ public class AdminCategoryController : ControllerBase
     }
 
     [HttpPut("/UpdateCategory")]
-    public async Task<IActionResult> UpdateCategory([FromBody] CategoryDTO categoryDto)
+    public async Task<IActionResult> UpdateCategoryAsync([FromBody] CategoryDTO categoryDto)
     {
         try
         {
@@ -55,7 +55,7 @@ public class AdminCategoryController : ControllerBase
     }
 
     [HttpDelete("DeleteCategory/{categoryId}")]
-    public async Task<IActionResult> DeleteCategory(int categoryId)
+    public async Task<IActionResult> DeleteCategoryAsync(int categoryId)
     {
         try
         {

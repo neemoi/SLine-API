@@ -1,9 +1,12 @@
+using Application.MappingProfile.Admin;
 using Application.MappingProfile.User;
 using Application.Services;
+using Application.Services.Implementations.Admin;
 using Application.Services.Implementations.User;
 using Application.Services.Interfaces;
 using Application.Services.Interfaces.IRepository.Admin;
 using Application.Services.Interfaces.IRepository.User;
+using Application.Services.Interfaces.IServices.Admin;
 using Application.Services.Interfaces.IServices.User;
 using Application.UnitOfWork;
 using CategoryAPI.Mapping;
@@ -15,6 +18,7 @@ using Microsoft.OpenApi.Models;
 using Persistance;
 using Persistance.Context;
 using Persistance.Repository;
+using Persistance.Repository.Admin;
 using Persistance.Repository.User;
 using System.Text;
 
@@ -88,7 +92,7 @@ internal class Program
         });
 
         builder.Services.AddAutoMapper(typeof(MappingAuthorization), typeof(MappingStore), typeof(MappingCatalog),
-            typeof(MappingBasket), typeof(MappingProfile), typeof(MappingCategory));
+            typeof(MappingBasket), typeof(MappingProfile), typeof(MappingCategory), typeof(MappingSubCategory));
 
         // Registering Scoped Services
         builder.Services.AddScoped(provider =>
@@ -109,6 +113,7 @@ internal class Program
         builder.Services.AddScoped<IOrderService, OrderService>();
         builder.Services.AddScoped<IProfileService, ProfileService>();
         builder.Services.AddScoped<ICategoryService, CategoryService>();
+        builder.Services.AddScoped<ISubCategoryService, SubCategoryService>();
 
         //Registering Scoped Repositories
         builder.Services.AddScoped<IStoreRepository, StoresRepository>();
@@ -117,6 +122,7 @@ internal class Program
         builder.Services.AddScoped<IOrderRepository, OrderRepository>();
         builder.Services.AddScoped<IProfileRepository, ProfileRepository>();
         builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+        builder.Services.AddScoped<ISubCategoryRepository, SubCategoryRepository>();
 
         // Identity Configuration
         builder.Services.AddIdentity<Users, IdentityRole>()
