@@ -91,9 +91,9 @@ internal class Program
             };
         });
 
-        builder.Services.AddAutoMapper(typeof(MappingAuthorization), typeof(MappingStore), typeof(MappingCatalog),
+        builder.Services.AddAutoMapper(typeof(MappingAuthorization), typeof(MappingInformationAboutStoresStore), typeof(MappingCatalog),
             typeof(MappingBasket), typeof(MappingProfile), typeof(MappingCategory), typeof(MappingSubCategory),
-            typeof(MappingDeliveryOptions), typeof(MappingProduct));
+            typeof(MappingDeliveryOptions), typeof(MappingProduct), typeof(MappingWarehouse), typeof(MappingStore));
 
         // Registering Scoped Services
         builder.Services.AddScoped(provider =>
@@ -108,7 +108,7 @@ internal class Program
         builder.Services.AddScoped<UserManager<Users>, UserManager<Users>>();
         builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
         builder.Services.AddScoped<IAccountService, AccountService>();
-        builder.Services.AddScoped<IStoreService, StoreService>();
+        builder.Services.AddScoped<IInformationAboutStoreService, InformationAboutStoreService>();
         builder.Services.AddScoped<ICatalogService, CatalogService>();
         builder.Services.AddScoped<IBasketService, BasketService>();
         builder.Services.AddScoped<IOrderService, OrderService>();
@@ -116,10 +116,12 @@ internal class Program
         builder.Services.AddScoped<ICategoryService, CategoryService>();
         builder.Services.AddScoped<ISubCategoryService, SubCategoryService>();
         builder.Services.AddScoped<IDeliveryOptionService, DeliveryOptionService>();
-        builder.Services.AddScoped<IProductService, ProductService>();
+        builder.Services.AddScoped<IWarehouseService, WarehouseService>();
+        builder.Services.AddScoped<IStoreService, StoreService>();
+        builder.Services.AddScoped<IChainOfStoreService, ChainOfStoreService>();
 
         //Registering Scoped Repositories
-        builder.Services.AddScoped<IStoreRepository, StoresRepository>();
+        builder.Services.AddScoped<IInformationAboutStoresRepository, InformationAboutStoresRepository>();
         builder.Services.AddScoped<ICatalogRepository, CatalogRepository>();
         builder.Services.AddScoped<IBasketRepository, BasketReporitory>();
         builder.Services.AddScoped<IOrderRepository, OrderRepository>();
@@ -128,6 +130,9 @@ internal class Program
         builder.Services.AddScoped<ISubCategoryRepository, SubCategoryRepository>();
         builder.Services.AddScoped<IDeliveryOptionRepository, DeliveryOptionRepository>();
         builder.Services.AddScoped<IProductRepository, ProductRepository>();
+        builder.Services.AddScoped<IWarehouseRepository, WarehouseRepository>();
+        builder.Services.AddScoped<IStoreRepository, StoreRepository>();
+        builder.Services.AddScoped<IChainOfStoreRepository, ChainOfStoreRepository>();
 
         // Identity Configuration
         builder.Services.AddIdentity<Users, IdentityRole>()

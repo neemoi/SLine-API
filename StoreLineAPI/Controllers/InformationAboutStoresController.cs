@@ -9,9 +9,9 @@ namespace StoreLineAPI.Controllers
     //[Authorize]
     public class InformationAboutStoresController : ControllerBase
     {
-        private readonly IStoreService _storeService;
+        private readonly IInformationAboutStoreService _storeService;
 
-        public InformationAboutStoresController(IStoreService storeService)
+        public InformationAboutStoresController(IInformationAboutStoreService storeService)
         {
             _storeService = storeService;
         }

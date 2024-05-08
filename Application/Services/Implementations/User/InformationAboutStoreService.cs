@@ -5,12 +5,12 @@ using AutoMapper;
 
 namespace Application.Services.Implementations.User
 {
-    public class StoreService : IStoreService
+    public class InformationAboutStoreService : IInformationAboutStoreService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public StoreService(IUnitOfWork unitOfWork, IMapper mapper)
+        public InformationAboutStoreService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
@@ -20,7 +20,7 @@ namespace Application.Services.Implementations.User
         {
             try
             {
-                var result = await _unitOfWork.StoreRepository.GetAllChainsAsync(); 
+                var result = await _unitOfWork.InformationAboutStoresRepository.GetAllChainsAsync(); 
 
                 return _mapper.Map<List<ChainOfStoreResponseDto>>(result);
             }
@@ -34,7 +34,7 @@ namespace Application.Services.Implementations.User
         {
             try
             {
-                var result = await _unitOfWork.StoreRepository.GetAllStoresAsync();
+                var result = await _unitOfWork.InformationAboutStoresRepository.GetAllStoresAsync();
 
                 return _mapper.Map<List<StoreResponseDto>>(result);
             }

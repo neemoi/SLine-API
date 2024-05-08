@@ -54,7 +54,7 @@ public class AdminProductController : ControllerBase
         }
     }
 
-    [HttpDelete("DeleteProduct/{productId}")]
+    [HttpDelete("/DeleteProduct/{productId}")]
     public async Task<IActionResult> DeleteProductAsync(int productId)
     {
         try

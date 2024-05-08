@@ -4,9 +4,9 @@ using Persistance;
 
 namespace Application.MappingProfile.User
 {
-    public class MappingStore : Profile
+    public class MappingInformationAboutStoresStore : Profile
     {
-        public MappingStore()
+        public MappingInformationAboutStoresStore()
         {
             CreateMap<Store, StoreResponseDto>();
             CreateMap<ChainOfStore, ChainOfStoreResponseDto>();

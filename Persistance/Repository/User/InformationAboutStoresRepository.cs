@@ -4,11 +4,11 @@ using Persistance.Context;
 
 namespace Persistance.Repository.User
 {
-    public class StoresRepository : IStoreRepository
+    public class InformationAboutStoresRepository : IInformationAboutStoresRepository
     {
         private readonly StoreLineContext _storeLineContext;
 
-        public StoresRepository(StoreLineContext storeLineContext)
+        public InformationAboutStoresRepository(StoreLineContext storeLineContext)
         {
             _storeLineContext = storeLineContext;
         }

@@ -5,7 +5,7 @@ namespace Application.UnitOfWork
 {
     public interface IUnitOfWork
     {
-        public IStoreRepository StoreRepository { get; } 
+        public IInformationAboutStoresRepository InformationAboutStoresRepository { get; } 
 
         public ICatalogRepository CatalogRepository { get; }
 
@@ -22,6 +22,12 @@ namespace Application.UnitOfWork
         public IDeliveryOptionRepository DeliveryOptionRepository { get; }
 
         public IProductRepository ProductRepository { get; }
+
+        public IWarehouseRepository WarehouseRepository { get; }
+
+        public IStoreRepository StoreRepository { get; }
+
+        public IChainOfStoreRepository ChainOfStoresRepository { get; }
 
         Task SaveChangesAsync();
     }

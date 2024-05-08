@@ -12,5 +12,4 @@ namespace Application.MappingProfile.Admin
             CreateMap<SubCategoryDTO, Subcategory>();
         }
     }
-
 }

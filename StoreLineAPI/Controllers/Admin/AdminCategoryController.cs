@@ -2,68 +2,71 @@
 using Application.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
-[ApiController]
-[Route("Admin/Category")]
-public class AdminCategoryController : ControllerBase
+namespace StoreLineAPI.Controllers.Admin
 {
-    private readonly ICategoryService _categoryService;
-
-    public AdminCategoryController(ICategoryService categoryService)
+    [ApiController]
+    [Route("Admin/Category")]
+    public class AdminCategoryController : ControllerBase
     {
-        _categoryService = categoryService;
-    }
+        private readonly ICategoryService _categoryService;
 
-    [HttpGet("/GetAllCategories")]
-    public async Task<IActionResult> GetAllCategoriesAsync()
-    {
-        try
+        public AdminCategoryController(ICategoryService categoryService)
         {
-            return Ok(await _categoryService.GetAllCategoriesAsync());
+            _categoryService = categoryService;
         }
-        catch (Exception ex)
-        {
-            return StatusCode(500, $"Internal server error: {ex.Message}");
 
-        }
-    }
+        [HttpGet("/GetAllCategories")]
+        public async Task<IActionResult> GetAllCategoriesAsync()
+        {
+            try
+            {
+                return Ok(await _categoryService.GetAllCategoriesAsync());
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
 
-    [HttpPost("/AddCategory")]
-    public async Task<IActionResult> AddCategoryAsync([FromBody] CategoryDTO categoryDto)
-    {
-        try
-        {
-            return Ok(await _categoryService.AddCategoryAsync(categoryDto));
+            }
         }
-        catch (Exception ex)
-        {
-            return StatusCode(500, $"Internal server error: {ex.Message}");
 
-        }
-    }
+        [HttpPost("/AddCategory")]
+        public async Task<IActionResult> AddCategoryAsync([FromBody] CategoryDTO categoryDto)
+        {
+            try
+            {
+                return Ok(await _categoryService.AddCategoryAsync(categoryDto));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
 
-    [HttpPut("/UpdateCategory")]
-    public async Task<IActionResult> UpdateCategoryAsync([FromBody] CategoryDTO categoryDto)
-    {
-        try
-        {
-            return Ok(await _categoryService.UpdateCategoryAsync(categoryDto));
+            }
         }
-        catch (Exception ex)
-        {
-            return StatusCode(500, $"Internal server error: {ex.Message}");
-        }
-    }
 
-    [HttpDelete("DeleteCategory/{categoryId}")]
-    public async Task<IActionResult> DeleteCategoryAsync(int categoryId)
-    {
-        try
+        [HttpPut("/UpdateCategory")]
+        public async Task<IActionResult> UpdateCategoryAsync([FromBody] CategoryDTO categoryDto)
         {
-            return Ok(await _categoryService.DeleteCategoryAsync(categoryId));
+            try
+            {
+                return Ok(await _categoryService.UpdateCategoryAsync(categoryDto));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
         }
-        catch (Exception ex)
+
+        [HttpDelete("/DeleteCategory/{categoryId}")]
+        public async Task<IActionResult> DeleteCategoryAsync(int categoryId)
         {
-            return StatusCode(500, $"Internal server error: {ex.Message}");
+            try
+            {
+                return Ok(await _categoryService.DeleteCategoryAsync(categoryId));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
         }
     }
 }

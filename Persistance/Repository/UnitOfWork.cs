@@ -7,7 +7,7 @@ namespace Persistance.Repository
 {
     public class UnitOfWork : IUnitOfWork
     {
-        public IStoreRepository StoreRepository { get; }
+        public IInformationAboutStoresRepository InformationAboutStoresRepository { get; }
 
         public ICatalogRepository CatalogRepository { get; }
 
@@ -25,16 +25,23 @@ namespace Persistance.Repository
 
         public IProductRepository ProductRepository { get; }
 
+        public IWarehouseRepository WarehouseRepository { get; }
+
+        public IStoreRepository StoreRepository { get; }
+
+        public IChainOfStoreRepository ChainOfStoresRepository { get; }
 
         private readonly StoreLineContext _storeLineContext;
 
-        public UnitOfWork(StoreLineContext storeLineContext, IStoreRepository storeRepository, 
+        public UnitOfWork(StoreLineContext storeLineContext, IInformationAboutStoresRepository informationAboutStoresRepositoryStoreRepository, 
             ICatalogRepository catalogRepository, IBasketRepository basketRepository, IOrderRepository orderRepository, 
             IProfileRepository profileRepository, ICategoryRepository categoryRepository, ISubCategoryRepository subCategoryRepository,
-            IDeliveryOptionRepository deliveryOptionRepository, IProductRepository productRepository)
+            IDeliveryOptionRepository deliveryOptionRepository, IProductRepository productRepository,
+            IWarehouseRepository warehouseRepository, IStoreRepository storeRepository,
+            IChainOfStoreRepository chainOfStoresRepository)
         {
             _storeLineContext = storeLineContext;
-            StoreRepository = storeRepository;
+            InformationAboutStoresRepository = informationAboutStoresRepositoryStoreRepository;
             CatalogRepository = catalogRepository;
             BasketRepository = basketRepository;
             OrderRepository = orderRepository;
@@ -43,6 +50,9 @@ namespace Persistance.Repository
             SubCategoryRepository = subCategoryRepository;
             DeliveryOptionRepository = deliveryOptionRepository;
             ProductRepository = productRepository;
+            WarehouseRepository = warehouseRepository;
+            StoreRepository = storeRepository;
+            ChainOfStoresRepository = chainOfStoresRepository;
         }
 
         public async Task SaveChangesAsync()

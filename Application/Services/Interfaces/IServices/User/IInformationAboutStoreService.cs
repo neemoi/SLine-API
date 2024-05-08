@@ -2,7 +2,7 @@
 
 namespace Application.Services.Interfaces.IServices.User
 {
-    public interface IStoreService
+    public interface IInformationAboutStoreService
     {
         Task<List<ChainOfStoreResponseDto>> GetAllChainsAsync();
 

@@ -54,7 +54,7 @@ public class AdminSubCategoryController : ControllerBase
         }
     }
 
-    [HttpDelete("DeleteSubCategory/{subcategoryId}")]
+    [HttpDelete("/DeleteSubCategory/{subcategoryId}")]
     public async Task<IActionResult> DeleteSubCategoryAsync(int subcategoryId)
     {
         try
