@@ -18,7 +18,7 @@ namespace StoreLineAPI.Controllers
         }
 
         [HttpGet("Categories")]
-        public async Task<IActionResult> GetCategories()
+        public async Task<IActionResult> GetCategoriesAsync()
         {
             try
             {
@@ -44,7 +44,7 @@ namespace StoreLineAPI.Controllers
         }
 
         [HttpGet("Warehouse/{storeId:int}/{productId:int}")]
-        public async Task<IActionResult> GetWarehouseDetails(int storeId, int productId)
+        public async Task<IActionResult> GetWarehouseDetailsAsync(int storeId, int productId)
         {
             try
             {
@@ -57,7 +57,7 @@ namespace StoreLineAPI.Controllers
         }
 
         [HttpGet("Categories/{categoryId}")]
-        public async Task<IActionResult> GetSubcategoriesByCategoryId(int categoryId)
+        public async Task<IActionResult> GetSubcategoriesByCategoryIdAsync(int categoryId)
         {
             try
             {
@@ -70,7 +70,7 @@ namespace StoreLineAPI.Controllers
         }
 
         [HttpGet("Subcategories/{subcategoryId}")]
-        public async Task<IActionResult> GetProductsBySubcategoryId(int subcategoryId)
+        public async Task<IActionResult> GetProductsBySubcategoryIdAsync(int subcategoryId)
         {
             try
             {
@@ -83,7 +83,7 @@ namespace StoreLineAPI.Controllers
         }
 
         [HttpGet("Products")]
-        public async Task<IActionResult> GetAllProducts()
+        public async Task<IActionResult> GetAllProductsAsync()
         {
             try
             {

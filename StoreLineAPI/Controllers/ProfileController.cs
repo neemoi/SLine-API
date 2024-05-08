@@ -34,7 +34,7 @@ namespace StoreLineAPI.Controllers
 
 
         [HttpPut("SetAddres")]
-        public async Task<IActionResult> SetAddres(string userId, string address)
+        public async Task<IActionResult> SetAddresAsync(string userId, string address)
         {
             try
             {

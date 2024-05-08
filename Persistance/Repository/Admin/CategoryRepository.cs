@@ -62,7 +62,7 @@ namespace Application.Services.Interfaces.IRepository.Admin
             try
             {
                 var category = await _context.Categories.FindAsync(categoryDto.CategoryId)
-                    ?? throw new KeyNotFoundException($"The category with ID {categoryDto.CategoryId} was not found.");
+                    ?? throw new KeyNotFoundException($"The category with ID {categoryDto.CategoryId} was not found");
 
                 if (!string.IsNullOrEmpty(categoryDto.CategoryName) && categoryDto.CategoryName != category.CategoryName)
                 {
@@ -71,7 +71,7 @@ namespace Application.Services.Interfaces.IRepository.Admin
 
                     if (otherCategory != null)
                     {
-                        throw new InvalidOperationException($"Another category named {categoryDto.CategoryName} already exists.");
+                        throw new InvalidOperationException($"Another category named {categoryDto.CategoryName} already exists");
                     }
                 }
 
@@ -85,7 +85,6 @@ namespace Application.Services.Interfaces.IRepository.Admin
                     category.CategoryName = categoryDto.CategoryName;
                 }
 
-                // Сохранение изменений в базе данных
                 await _context.SaveChangesAsync();
 
                 return category;

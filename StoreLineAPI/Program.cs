@@ -92,7 +92,8 @@ internal class Program
         });
 
         builder.Services.AddAutoMapper(typeof(MappingAuthorization), typeof(MappingStore), typeof(MappingCatalog),
-            typeof(MappingBasket), typeof(MappingProfile), typeof(MappingCategory), typeof(MappingSubCategory));
+            typeof(MappingBasket), typeof(MappingProfile), typeof(MappingCategory), typeof(MappingSubCategory),
+            typeof(MappingDeliveryOptions), typeof(MappingProduct));
 
         // Registering Scoped Services
         builder.Services.AddScoped(provider =>
@@ -114,6 +115,8 @@ internal class Program
         builder.Services.AddScoped<IProfileService, ProfileService>();
         builder.Services.AddScoped<ICategoryService, CategoryService>();
         builder.Services.AddScoped<ISubCategoryService, SubCategoryService>();
+        builder.Services.AddScoped<IDeliveryOptionService, DeliveryOptionService>();
+        builder.Services.AddScoped<IProductService, ProductService>();
 
         //Registering Scoped Repositories
         builder.Services.AddScoped<IStoreRepository, StoresRepository>();
@@ -123,6 +126,8 @@ internal class Program
         builder.Services.AddScoped<IProfileRepository, ProfileRepository>();
         builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
         builder.Services.AddScoped<ISubCategoryRepository, SubCategoryRepository>();
+        builder.Services.AddScoped<IDeliveryOptionRepository, DeliveryOptionRepository>();
+        builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
         // Identity Configuration
         builder.Services.AddIdentity<Users, IdentityRole>()

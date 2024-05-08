@@ -57,7 +57,7 @@ namespace StoreLineAPI.Controllers
         }
 
         [HttpGet("AvailableStores/{productId}")]
-        public async Task<IActionResult> GetProductsAvailableStores(int productId)
+        public async Task<IActionResult> GetProductsAvailableStoresAsync(int productId)
         {
             try
             {

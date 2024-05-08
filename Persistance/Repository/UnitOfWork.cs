@@ -21,12 +21,17 @@ namespace Persistance.Repository
 
         public ISubCategoryRepository SubCategoryRepository { get; }
 
+        public IDeliveryOptionRepository DeliveryOptionRepository { get; }
+
+        public IProductRepository ProductRepository { get; }
+
 
         private readonly StoreLineContext _storeLineContext;
 
         public UnitOfWork(StoreLineContext storeLineContext, IStoreRepository storeRepository, 
             ICatalogRepository catalogRepository, IBasketRepository basketRepository, IOrderRepository orderRepository, 
-            IProfileRepository profileRepository, ICategoryRepository categoryRepository, ISubCategoryRepository subCategoryRepository)
+            IProfileRepository profileRepository, ICategoryRepository categoryRepository, ISubCategoryRepository subCategoryRepository,
+            IDeliveryOptionRepository deliveryOptionRepository, IProductRepository productRepository)
         {
             _storeLineContext = storeLineContext;
             StoreRepository = storeRepository;
@@ -36,6 +41,8 @@ namespace Persistance.Repository
             ProfileRepository = profileRepository;
             CategoryRepository = categoryRepository;
             SubCategoryRepository = subCategoryRepository;
+            DeliveryOptionRepository = deliveryOptionRepository;
+            ProductRepository = productRepository;
         }
 
         public async Task SaveChangesAsync()

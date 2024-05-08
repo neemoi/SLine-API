@@ -18,7 +18,7 @@ namespace StoreLineAPI.Controllers
 
         [HttpPost("Login")]
         [AllowAnonymous]
-        public async Task<IActionResult> Login([FromBody] LoginDto model)
+        public async Task<IActionResult> LoginAsync([FromBody] LoginDto model)
         {
             try
             {

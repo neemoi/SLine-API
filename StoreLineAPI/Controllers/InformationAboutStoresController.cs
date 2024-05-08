@@ -17,7 +17,7 @@ namespace StoreLineAPI.Controllers
         }
 
         [HttpGet("AllStores")]
-        public async Task<IActionResult> GetAllStores()
+        public async Task<IActionResult> GetAllStoresAsync()
         {
             try
             {
@@ -31,7 +31,7 @@ namespace StoreLineAPI.Controllers
         }
 
         [HttpGet("Chains")]
-        public async Task<IActionResult> GetAllChains()
+        public async Task<IActionResult> GetAllChainsAsync()
         {
             try
             {

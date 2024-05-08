@@ -16,7 +16,7 @@ namespace StoreLineAPI.Controllers
         }
 
         [HttpGet("Delivery/{storeId}")]
-        public async Task<IActionResult> GetDelivery(int storeId)
+        public async Task<IActionResult> GetDeliveryAsync(int storeId)
         {
             try
             {
@@ -29,7 +29,7 @@ namespace StoreLineAPI.Controllers
         }
 
         [HttpGet("OrderStatus")]
-        public async Task<IActionResult> GetOrderStatus()
+        public async Task<IActionResult> GetOrderStatusAsync()
         {
             try
             {
@@ -42,7 +42,7 @@ namespace StoreLineAPI.Controllers
         }
 
         [HttpGet("PaymentType")]
-        public async Task<IActionResult> GetPaymentType()
+        public async Task<IActionResult> GetPaymentTypeAsync()
         {
             try
             {
@@ -55,7 +55,7 @@ namespace StoreLineAPI.Controllers
         }
 
         [HttpPost("Create")]
-        public async Task<IActionResult> CreateOrdersForUser(CreateOrder model)
+        public async Task<IActionResult> CreateOrdersForUserAsync(CreateOrder model)
         {
             try
             {
@@ -68,7 +68,7 @@ namespace StoreLineAPI.Controllers
         }
 
         [HttpGet("GetOrders/{userId}")]
-        public async Task<IActionResult> GetOrdersByUserId(string userId)
+        public async Task<IActionResult> GetOrdersByUserIdAsync(string userId)
         {
             try
             {
