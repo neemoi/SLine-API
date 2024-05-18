@@ -19,6 +19,7 @@ namespace StoreLineAPI.Controllers.Admin
         }
 
         [HttpGet("/GetDeliveryType")]
+        public async Task<IActionResult> GetAllDeliveryOptionAsync()
         public async Task<IActionResult> GetDeliveryTypeAsync(int storeId)
         {
             try
