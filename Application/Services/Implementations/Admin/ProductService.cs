@@ -44,7 +44,6 @@ namespace Application.Services.Implementations.Admin
             }
         }
 
-        public async Task<List<ProductDTO>> GetAllProductsAsync()
         {
             try
             {
