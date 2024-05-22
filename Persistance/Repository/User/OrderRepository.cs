@@ -1,7 +1,6 @@
 ﻿using Application.DtoModels.Models.User.Order;
 using Application.Services.Interfaces.IRepository.User;
 using AutoMapper;
-using Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using Persistance.Context;
 
@@ -111,7 +110,6 @@ namespace Persistance.Repository.User
             }
         }
 
-
         public async Task<List<Order>> GetOrdersByUserIdAsync(string userId)
         {
             try
@@ -142,7 +140,7 @@ namespace Persistance.Repository.User
             }
         }
 
-        public async Task<List<DeliveryOptionDto>> GetDelivery(int storeId)
+        public async Task<List<DeliveryOptionDto>> GetDeliveryAsync(int storeId)
         {
             try
             {
@@ -159,7 +157,7 @@ namespace Persistance.Repository.User
             }
         }
 
-        public async Task<List<OrderStatusDto>> GetOrderStatus()
+        public async Task<List<OrderStatusDto>> GetOrderStatusAsync()
         {
             try
             {
@@ -176,7 +174,7 @@ namespace Persistance.Repository.User
             }
         }
 
-        public async Task<List<PaymentDto>> GetPaymentType()
+        public async Task<List<PaymentDto>> GetPaymentTypeAsync()
         {
             try
             {
@@ -249,6 +247,27 @@ namespace Persistance.Repository.User
             }
         }
 
+        public async Task<Order> UpdateOrderStatusAsync(int orderId, int statusId)
+        {
+            try
+            {
+                var order = await _storeLineContext.Orders
+                    .FirstOrDefaultAsync(o => o.OrderId == orderId)
+                    ?? throw new Exception($"Order with ID {orderId} not found.");
+
+                order.StatusId = statusId;
+
+                _storeLineContext.Orders.Update(order);
+
+                await _storeLineContext.SaveChangesAsync();
+
+                return order;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error in OrderRepository -> UpdateOrderStatusAsync: {ex.Message}");
+            }
+        }
 
         private async Task<int> GetAvailableQuantity(int productId, int storeId)
         {

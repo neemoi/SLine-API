@@ -60,11 +60,11 @@ namespace Application.Services.Implementations.User
             }
         }
 
-        public async Task<List<DeliveryOptionDto>> GetDelivery(int storeId)
+        public async Task<List<DeliveryOptionDto>> GetDeliveryAsync(int storeId)
         {
             try
             {
-                var result = await _unitOfWork.OrderRepository.GetDelivery(storeId);
+                var result = await _unitOfWork.OrderRepository.GetDeliveryAsync(storeId);
 
                 return _mapper.Map<List<DeliveryOptionDto>>(result);
             }
@@ -74,11 +74,11 @@ namespace Application.Services.Implementations.User
             }
         }
 
-        public async Task<List<OrderStatusDto>> GetOrderStatus()
+        public async Task<List<OrderStatusDto>> GetOrderStatusAsync()
         {
             try
             {
-                var result = await _unitOfWork.OrderRepository.GetOrderStatus();
+                var result = await _unitOfWork.OrderRepository.GetOrderStatusAsync();
 
                 return _mapper.Map<List<OrderStatusDto>>(result);
             }
@@ -88,17 +88,31 @@ namespace Application.Services.Implementations.User
             }
         }
 
-        public async Task<List<PaymentDto>> GetPaymentType()
+        public async Task<List<PaymentDto>> GetPaymentTypeAsync()
         {
             try
             {
-                var result = await _unitOfWork.OrderRepository.GetPaymentType();
+                var result = await _unitOfWork.OrderRepository.GetPaymentTypeAsync();
 
                 return _mapper.Map<List<PaymentDto>>(result);
             }
             catch (Exception ex)
             {
                 throw new Exception($"Error in OrderService -> GetOrderStatus: {ex.Message}");
+            }
+        }
+
+        public async Task<UpdateOrderStatusDto> UpdateOrderStatusAsync(int orderId, int statusId)
+        {
+            try
+            {
+                var result = await _unitOfWork.OrderRepository.UpdateOrderStatusAsync(orderId, statusId);
+
+                return _mapper.Map<UpdateOrderStatusDto>(result);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error in OrderService -> UpdateOrderStatusAsync: {ex.Message}");
             }
         }
     }

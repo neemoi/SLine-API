@@ -41,6 +41,8 @@ namespace Application.MappingProfile.User
             CreateMap<DeliveryOption, DeliveryOptionDto>();
             CreateMap<OrderStatus, OrderStatusDto>();
             CreateMap<Payment, PaymentDto>();
+            CreateMap<Order, UpdateOrderStatusDto>();
+            CreateMap<UpdateOrderStatusDto, Order>();
         }
     }
 }

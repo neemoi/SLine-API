@@ -29,6 +29,8 @@ namespace Application.UnitOfWork
 
         public IChainOfStoreRepository ChainOfStoresRepository { get; }
 
+        public IUserRepository UserRepository { get; }
+
         Task SaveChangesAsync();
     }
 }

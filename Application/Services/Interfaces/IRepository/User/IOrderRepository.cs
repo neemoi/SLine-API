@@ -9,11 +9,13 @@ namespace Application.Services.Interfaces.IRepository.User
 
         Task<List<Order>> GetOrdersByUserIdAsync(string userId);
 
-        Task<List<DeliveryOptionDto>> GetDelivery(int storeId);
+        Task<List<DeliveryOptionDto>> GetDeliveryAsync(int storeId);
 
-        Task<List<OrderStatusDto>> GetOrderStatus();
+        Task<List<OrderStatusDto>> GetOrderStatusAsync();
 
-        Task<List<PaymentDto>> GetPaymentType();
+        Task<List<PaymentDto>> GetPaymentTypeAsync();
+
+        Task<Order> UpdateOrderStatusAsync(int orderId, int statusId);
 
         Task<Order> CancelOrderAsync(int orderId, string userId);
     }

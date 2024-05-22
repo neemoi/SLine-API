@@ -1,6 +1,5 @@
 ﻿using Application.DtoModels.Models.User.Order;
 using Application.DtoModels.Response.User.Order;
-using Persistance;
 
 namespace Application.Services.Interfaces.IServices.User
 {
@@ -8,11 +7,13 @@ namespace Application.Services.Interfaces.IServices.User
     {
         Task<OrderResponseDto> CreateOrderAsync(CreateOrder model);
 
-        Task<List<DeliveryOptionDto>> GetDelivery(int storeId);
+        Task<List<DeliveryOptionDto>> GetDeliveryAsync(int storeId);
 
-        Task<List<OrderStatusDto>> GetOrderStatus();
+        Task<List<OrderStatusDto>> GetOrderStatusAsync();
 
-        Task<List<PaymentDto>> GetPaymentType();
+        Task<List<PaymentDto>> GetPaymentTypeAsync();
+        
+        Task<UpdateOrderStatusDto> UpdateOrderStatusAsync(int orderId, int statusId);
 
         Task<List<OrderResponseDto>> GetOrdersByUserIdAsync(string userId);
 

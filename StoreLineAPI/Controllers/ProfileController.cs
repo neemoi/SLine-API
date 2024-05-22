@@ -19,19 +19,6 @@ namespace StoreLineAPI.Controllers
             _profileService = profileService;
         }
 
-        [HttpGet("GetAllInfo")]
-        public async Task<IActionResult> GetAllInfoAsync(string userId)
-        {
-            try
-            {
-                return Ok(await _profileService.GetAllInfoAsync(userId));
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Internal server error: {ex.Message}");
-            }
-        }
-
 
         [HttpPut("SetAddres")]
         public async Task<IActionResult> SetAddresAsync(string userId, string address)
@@ -52,6 +39,19 @@ namespace StoreLineAPI.Controllers
             try
             {
                 return Ok(await _profileService.EditProfileAsync(model, userId));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
+        [HttpGet("GetAllInfo")]
+        public async Task<IActionResult> GetAllInfoAsync(string userId)
+        {
+            try
+            {
+                return Ok(await _profileService.GetAllInfoAsync(userId));
             }
             catch (Exception ex)
             {

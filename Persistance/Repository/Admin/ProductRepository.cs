@@ -65,6 +65,7 @@ namespace Persistance.Repository.Admin
             }
         }
 
+        public async Task<List<Product>> GetAllProductsAsync()
         {
             try
             {

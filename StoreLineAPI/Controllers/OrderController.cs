@@ -15,45 +15,6 @@ namespace StoreLineAPI.Controllers
             _orderService = orderService;
         }
 
-        [HttpGet("Delivery/{storeId}")]
-        public async Task<IActionResult> GetDeliveryAsync(int storeId)
-        {
-            try
-            {
-                return Ok(await _orderService.GetDelivery(storeId));
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Internal server error: {ex.Message}");
-            }
-        }
-
-        [HttpGet("OrderStatus")]
-        public async Task<IActionResult> GetOrderStatusAsync()
-        {
-            try
-            {
-                return Ok(await _orderService.GetOrderStatus());
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Internal server error: {ex.Message}");
-            }
-        }
-
-        [HttpGet("PaymentType")]
-        public async Task<IActionResult> GetPaymentTypeAsync()
-        {
-            try
-            {
-                return Ok(await _orderService.GetPaymentType());
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Internal server error: {ex.Message}");
-            }
-        }
-
         [HttpPost("Create")]
         public async Task<IActionResult> CreateOrdersForUserAsync(CreateOrder model)
         {
@@ -67,12 +28,64 @@ namespace StoreLineAPI.Controllers
             }
         }
 
+        [HttpPut("UpdateOrderStatus")]
+        public async Task<IActionResult> UpdateOrderStatus([FromBody] UpdateOrderStatusDto updateOrderStatusDto)
+        {
+            try
+            {
+                return Ok(await _orderService.UpdateOrderStatusAsync(updateOrderStatusDto.OrderId, updateOrderStatusDto.StatusId));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
+        [HttpGet("Delivery/{storeId}")]
+        public async Task<IActionResult> GetDeliveryAsync(int storeId)
+        {
+            try
+            {
+                return Ok(await _orderService.GetDeliveryAsync(storeId));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
         [HttpGet("GetOrders/{userId}")]
         public async Task<IActionResult> GetOrdersByUserIdAsync(string userId)
         {
             try
             {
                 return Ok(await _orderService.GetOrdersByUserIdAsync(userId));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
+        [HttpGet("OrderStatus")]
+        public async Task<IActionResult> GetOrderStatusAsync()
+        {
+            try
+            {
+                return Ok(await _orderService.GetOrderStatusAsync());
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
+        [HttpGet("PaymentType")]
+        public async Task<IActionResult> GetPaymentTypeAsync()
+        {
+            try
+            {
+                return Ok(await _orderService.GetPaymentTypeAsync());
             }
             catch (Exception ex)
             {

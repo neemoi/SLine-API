@@ -119,6 +119,7 @@ internal class Program
         builder.Services.AddScoped<IWarehouseService, WarehouseService>();
         builder.Services.AddScoped<IStoreService, StoreService>();
         builder.Services.AddScoped<IChainOfStoreService, ChainOfStoreService>();
+        builder.Services.AddScoped<IUserService, UserService>();
 
         //Registering Scoped Repositories
         builder.Services.AddScoped<IInformationAboutStoresRepository, InformationAboutStoresRepository>();
@@ -133,6 +134,7 @@ internal class Program
         builder.Services.AddScoped<IWarehouseRepository, WarehouseRepository>();
         builder.Services.AddScoped<IStoreRepository, StoreRepository>();
         builder.Services.AddScoped<IChainOfStoreRepository, ChainOfStoreRepository>();
+        builder.Services.AddScoped<IUserRepository, UserRepository>();
 
         // Identity Configuration
         builder.Services.AddIdentity<Users, IdentityRole>()

@@ -31,6 +31,8 @@ namespace Persistance.Repository
 
         public IChainOfStoreRepository ChainOfStoresRepository { get; }
 
+        public IUserRepository UserRepository { get; }
+
         private readonly StoreLineContext _storeLineContext;
 
         public UnitOfWork(StoreLineContext storeLineContext, IInformationAboutStoresRepository informationAboutStoresRepositoryStoreRepository, 
@@ -38,7 +40,7 @@ namespace Persistance.Repository
             IProfileRepository profileRepository, ICategoryRepository categoryRepository, ISubCategoryRepository subCategoryRepository,
             IDeliveryOptionRepository deliveryOptionRepository, IProductRepository productRepository,
             IWarehouseRepository warehouseRepository, IStoreRepository storeRepository,
-            IChainOfStoreRepository chainOfStoresRepository)
+            IChainOfStoreRepository chainOfStoresRepository, IUserRepository userRepository)
         {
             _storeLineContext = storeLineContext;
             InformationAboutStoresRepository = informationAboutStoresRepositoryStoreRepository;
@@ -53,12 +55,12 @@ namespace Persistance.Repository
             WarehouseRepository = warehouseRepository;
             StoreRepository = storeRepository;
             ChainOfStoresRepository = chainOfStoresRepository;
+            UserRepository = userRepository;
         }
 
         public async Task SaveChangesAsync()
         {
             await _storeLineContext.SaveChangesAsync();
         }
-
     }
 }
