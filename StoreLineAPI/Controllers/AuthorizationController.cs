@@ -1,4 +1,5 @@
-﻿using Application.DtoModels.Models.Authorization;
+﻿using Application.DtoModels.Models.Admin;
+using Application.DtoModels.Models.Authorization;
 using Application.Services.Interfaces.IServices.User;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -56,6 +57,22 @@ namespace StoreLineAPI.Controllers
             {
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
+        }
+
+        [HttpPost("forgot-password")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordDto model)
+        {
+            await _accountService.ForgotPasswordAsync(model);
+            return Ok(new { Message = "Password reset link has been sent to your email." });
+        }
+
+        [HttpPost("reset-password")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ResetPassword(ResetPasswordDto model)
+        {
+            await _accountService.ResetPasswordAsync(model);
+            return Ok(new { Message = "Password has been reset successfully." });
         }
     }
 }

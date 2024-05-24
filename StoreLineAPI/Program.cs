@@ -1,3 +1,4 @@
+using Application.DtoModels.Models.Admin;
 using Application.MappingProfile.Admin;
 using Application.MappingProfile.User;
 using Application.Services;
@@ -31,6 +32,7 @@ internal class Program
         var jwtSettings = builder.Configuration.GetSection("JwtSettings");
         var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
         builder.Services.AddDbContext<StoreLineContext>(options => options.UseNpgsql(connectionString));
+        builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
 
         builder.Services.AddCors(options =>
         {
@@ -120,6 +122,7 @@ internal class Program
         builder.Services.AddScoped<IStoreService, StoreService>();
         builder.Services.AddScoped<IChainOfStoreService, ChainOfStoreService>();
         builder.Services.AddScoped<IUserService, UserService>();
+        builder.Services.AddTransient<IEmailService, EmailService>();
 
         //Registering Scoped Repositories
         builder.Services.AddScoped<IInformationAboutStoresRepository, InformationAboutStoresRepository>();
@@ -139,7 +142,8 @@ internal class Program
         // Identity Configuration
         builder.Services.AddIdentity<Users, IdentityRole>()
             .AddEntityFrameworkStores<StoreLineContext>()
-            .AddRoles<IdentityRole>();
+            .AddRoles<IdentityRole>()
+            .AddDefaultTokenProviders();
 
         var app = builder.Build();
 

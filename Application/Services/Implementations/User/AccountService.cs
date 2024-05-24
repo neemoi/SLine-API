@@ -1,10 +1,13 @@
-﻿using Application.DtoModels.Models.Authorization;
+﻿using Application.DtoModels.Models.Admin;
+using Application.DtoModels.Models.Authorization;
 using Application.DtoModels.Response.Authorization;
+using Application.Services.Interfaces.IServices.Admin;
 using Application.Services.Interfaces.IServices.User;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Persistance;
+using System.Web;
 
 
 namespace Application.Services.Implementations.User
@@ -15,16 +18,18 @@ namespace Application.Services.Implementations.User
         private readonly SignInManager<Users> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly JwtService _jwtService;
+        private readonly IEmailService _emailService;
         private readonly IMapper _mapper;
 
         public AccountService(UserManager<Users> userManager, SignInManager<Users> signInManager, 
-            RoleManager<IdentityRole> roleManager, IMapper mapper, JwtService jwtService)
+            RoleManager<IdentityRole> roleManager, IMapper mapper, JwtService jwtService, IEmailService emailService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _mapper = mapper;
             _jwtService = jwtService;
             _roleManager = roleManager;
+            _emailService = emailService;
         }
 
         public async Task<LoginResponseDto> LoginAsync(LoginDto model)
@@ -124,6 +129,51 @@ namespace Application.Services.Implementations.User
             catch (Exception ex)
             {
                 throw new Exception($"Error in AccountService -> LogoutAsync: {ex.Message}");
+            }
+        }
+
+        public async Task ForgotPasswordAsync(ForgotPasswordDto model)
+        {
+            try
+            {
+                var user = await _userManager.FindByEmailAsync(model.Email);
+
+                if (user == null)
+                {
+                    throw new Exception("User not found");
+                }
+
+                var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+                var resetLink = $"http://localhost:3000/reset-password?token={HttpUtility.UrlEncode(token)}&email={model.Email}";
+
+                var message = $"Восстановление пароля: <a href='{resetLink}'>тут</a>.";
+
+                await _emailService.SendEmailAsync(model.Email, "Password Reset", message);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error in AccountService -> ForgotPasswordAsync: {ex.Message}");
+            }
+        }
+
+
+        public async Task ResetPasswordAsync(ResetPasswordDto model)
+        {
+            try
+            {
+                var user = await _userManager.FindByEmailAsync(model.Email);
+
+                if (user == null)
+                {
+                    throw new Exception("User not found");
+                }
+
+                await _userManager.ResetPasswordAsync(user, model.Token, model.NewPassword);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error in AccountService -> ResetPasswordAsync: {ex.Message}");
             }
         }
     }

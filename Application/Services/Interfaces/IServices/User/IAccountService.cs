@@ -1,4 +1,5 @@
-﻿using Application.DtoModels.Models.Authorization;
+﻿using Application.DtoModels.Models.Admin;
+using Application.DtoModels.Models.Authorization;
 using Application.DtoModels.Response.Authorization;
 using Microsoft.AspNetCore.Http;
 
@@ -11,5 +12,9 @@ namespace Application.Services.Interfaces.IServices.User
         Task<RegisterResponseDto> RegisterAsync(RegisterDto model);
 
         Task<LogoutResponseDto> LogoutAsync(HttpContext httpContext);
+
+        Task ForgotPasswordAsync(ForgotPasswordDto model);
+
+        Task ResetPasswordAsync(ResetPasswordDto model);
     }
 }
