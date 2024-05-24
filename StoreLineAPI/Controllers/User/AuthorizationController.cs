@@ -4,7 +4,7 @@ using Application.Services.Interfaces.IServices.User;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace StoreLineAPI.Controllers
+namespace StoreLineAPI.Controllers.User
 {
     [ApiController]
     [Route("/Authorization")]

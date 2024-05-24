@@ -67,7 +67,10 @@ public partial class StoreLineContext : IdentityDbContext<Users>
             entity.Property(e => e.NormalizedEmail).HasMaxLength(256);
             entity.Property(e => e.NormalizedUserName).HasMaxLength(256);
             entity.Property(e => e.UserName).HasMaxLength(256);
-
+            entity.Property(e => e.Birthday)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("birthday_date");
         });
 
         modelBuilder.Entity<Category>(entity =>
@@ -94,6 +97,7 @@ public partial class StoreLineContext : IdentityDbContext<Users>
                 .HasMaxLength(255)
                 .HasColumnName("chain_name");
             entity.Property(e => e.Description).HasColumnName("description");
+            entity.Property(e => e.ChainImage).HasColumnName("chain_image");
         });
 
         modelBuilder.Entity<DeliveryOption>(entity =>

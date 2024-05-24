@@ -1,5 +1,4 @@
 ﻿using Application.DtoModels.Models.User.Profile;
-using Application.DtoModels.Response.User.Basket;
 using Application.DtoModels.Response.User.Profile;
 using Application.Services.Interfaces.IServices.User;
 using Application.UnitOfWork;
@@ -23,7 +22,7 @@ namespace Application.Services.Implementations.User
             try
             {
                 var result = await _unitOfWork.ProfileRepository.EditProfileAsync(model, userId);
-
+               
                 return _mapper.Map<ProfileResposneDto>(result);
             }
             catch (Exception ex)
@@ -31,7 +30,7 @@ namespace Application.Services.Implementations.User
                 throw new Exception($"Error in ProfileService -> EditProfileAsync: {ex.Message}");
             }
         }
-      
+
         public async Task<ProfileResposneDto> SetAddres(string userId, string address)
         {
             try

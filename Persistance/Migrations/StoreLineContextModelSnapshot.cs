@@ -193,6 +193,10 @@ namespace Persistance.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ChainId"));
 
+                    b.Property<string>("ChainImage")
+                        .HasColumnType("text")
+                        .HasColumnName("chain_image");
+
                     b.Property<string>("ChainName")
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)")
@@ -544,6 +548,12 @@ namespace Persistance.Migrations
                     b.Property<string>("Address")
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)");
+
+                    b.Property<DateTime?>("Birthday")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("birthday_date")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.Property<string>("ConcurrencyStamp")
                         .HasColumnType("text");

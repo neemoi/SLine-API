@@ -149,7 +149,7 @@ namespace Application.Services.Implementations.User
 
                 var message = $"Восстановление пароля: <a href='{resetLink}'>тут</a>.";
 
-                await _emailService.SendEmailAsync(model.Email, "Password Reset", message);
+                await _emailService.SendEmailAsync(model.Email, "Восстановление пароля", message);
             }
             catch (Exception ex)
             {

@@ -1,20 +1,24 @@
 ﻿using Application.DtoModels.Models.User.Order;
 using Application.Services.Interfaces.IRepository.User;
+using Application.Services.Interfaces.IServices.Admin;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Persistance.Context;
+using System.Text;
 
 namespace Persistance.Repository.User
 {
     public class OrderRepository : IOrderRepository
     {
         private readonly StoreLineContext _storeLineContext;
+        private readonly IEmailService _emailService;
         private readonly IMapper _mapper;
 
-        public OrderRepository(StoreLineContext storeLineContext, IMapper mapper)
+        public OrderRepository(StoreLineContext storeLineContext, IMapper mapper, IEmailService emailService)
         {
             _storeLineContext = storeLineContext;
             _mapper = mapper;
+            _emailService = emailService;
         }
 
         public async Task<Order> CreateOrderAsync(CreateOrder model)
@@ -96,6 +100,45 @@ namespace Persistance.Repository.User
                     }
 
                     await _storeLineContext.SaveChangesAsync();
+
+                    if (user.Email != null)
+                    {
+                        StringBuilder message = new StringBuilder();
+                        message.AppendLine($"<h1>Заказ номер #{order.OrderId}</h1>");
+                        message.AppendLine("<table border='1' cellpadding='10'>");
+                        message.AppendLine("<tr><th>Товар</th><th>Количество</th><th>Цена</th></tr>");
+
+                        foreach (var orderItem in order.OrderItems)
+                        {
+                            message.AppendLine($"<tr><td>{orderItem.Product.ProductName}</td><td>{orderItem.Quantity} шт.</td><td>{orderItem.TotalPrice}р.</td></tr>");
+                        }
+
+                        message.AppendLine("</table>");
+
+                        decimal totalPrice = order.OrderItems.Sum(item => item.TotalPrice ?? 0m);
+                        message.AppendLine($"<p><strong>Способ доставки:</strong> {order.Delivery.DeliveryType}</p>");
+
+                        if (order.Delivery.DeliveryType == "Пункт выдачи")
+                        {
+                            message.AppendLine($"<p><strong>Адрес пункта выдачи:</strong> {order.Delivery.Store.City}, {order.Delivery.Store.Address}</p>");
+                        }
+                        else if (order.Delivery.DeliveryType == "Курьер")
+                        {
+                            message.AppendLine($"<p><strong>Адрес доставки:</strong> {order.Cart.User.Address}</p>");
+                            message.AppendLine($"<p><strong>Цена доставки:</strong> {order.Delivery.DeliveryPrice}р.</p>");
+                        }
+
+                        totalPrice += order.Delivery.DeliveryPrice ?? 0m; 
+
+                        message.AppendLine($"<p><strong>Дата заказа:</strong> {order.OrderDate}</p>");
+                        message.AppendLine($"<p><strong>Общая стоимость заказа:</strong> {totalPrice}р.</p>");
+
+                        await _emailService.SendEmailAsync(user.Email, $"Заказ номер #{order.OrderId}", message.ToString());
+                    }
+                    else
+                    {
+                        throw new InvalidOperationException("User email is null or empty or invalid.");
+                    }
 
                     return order;
                 }

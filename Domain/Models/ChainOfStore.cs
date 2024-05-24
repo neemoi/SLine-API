@@ -8,5 +8,7 @@ public partial class ChainOfStore
 
     public string? Description { get; set; }
 
+    public string? ChainImage { get; set; }
+
     public virtual ICollection<Store> Stores { get; set; } = new List<Store>();
 }

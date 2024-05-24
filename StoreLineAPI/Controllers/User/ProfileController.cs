@@ -4,14 +4,14 @@ using Application.Services.Interfaces.IServices.User;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace StoreLineAPI.Controllers
+namespace StoreLineAPI.Controllers.User
 {
     [Route("/Profile")]
     [ApiController]
     //[Authorize]
     public class ProfileController : ControllerBase
     {
-       
+
         private readonly IProfileService _profileService;
 
         public ProfileController(IProfileService profileService)

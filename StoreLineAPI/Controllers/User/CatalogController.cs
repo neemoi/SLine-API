@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Persistance;
 
-namespace StoreLineAPI.Controllers
+namespace StoreLineAPI.Controllers.User
 {
     [ApiController]
     [Route("/Catalog")]

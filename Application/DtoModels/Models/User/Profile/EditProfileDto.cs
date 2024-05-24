@@ -10,6 +10,8 @@
         
         public string? Address { get; set; }
 
+        public DateTime? Birthday { get; set; }
+
         public string? CurrentPassword { get; set; }
 
         public string? NewPassword { get; set; }
